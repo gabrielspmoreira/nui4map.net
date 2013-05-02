@@ -5,10 +5,10 @@ using ESRI.ArcGIS.Client;
 using ESRI.ArcGIS.Client.Geometry;
 using ESRI.ArcGIS.Client.Symbols;
 using Kinect4EsriMap.Extensions;
-using Kinect4Map.MapUtils;
 using MapUtils.Structs;
+using NUI4Map.Handler;
 
-namespace Kinect4EsriMap.MapUtils
+namespace Kinect4EsriMap.Handler
 {
     public class EsriMapHandler : IMapHandler
     {

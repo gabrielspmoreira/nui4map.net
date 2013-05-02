@@ -1,8 +1,7 @@
 using System;
 using MapUtils.Structs;
-using Leap4TelerikMap.Structs;
 
-namespace Leap4Map.Gestures
+namespace NUI4Map.Gestures
 {
     public interface IMapPanGestureHandler
     {
@@ -12,6 +11,6 @@ namespace Leap4Map.Gestures
         event Action PanStop;
         event Action<MapCoord> Panning;
 
-        bool Detect(Leap.Frame frame);
+        bool Detect(object frame);
     }
 }

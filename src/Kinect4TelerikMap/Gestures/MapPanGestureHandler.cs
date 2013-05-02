@@ -7,6 +7,7 @@ using MapUtils.Structs;
 using Microsoft.Kinect;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Map;
+using NUI4Map.Structs;
 
 namespace Kinect4TelerikMap.Gestures
 {
@@ -17,14 +18,14 @@ namespace Kinect4TelerikMap.Gestures
         private RadMap _map;
         private Rect _startExtent;
         private Location _startHandCoordinate;
-        private SkeletonPoint _startHandPoint;
+        private Vector3D _startHandPoint;
         private Location _startMapCenter;
 
-        public override event Action<MapCoord> KinectPanning;
+        public override event Action<MapCoord> Panning;
 
-        public override event Action<MapCoord> KinectPanStart;
+        public override event Action<MapCoord> PanStart;
 
-        public override event Action KinectPanStop;     
+        public override event Action PanStop;     
 
         public override object MapComponent
         {
@@ -45,7 +46,7 @@ namespace Kinect4TelerikMap.Gestures
             }
         }
 
-        protected void DoPan(SkeletonPoint handPoint)
+        protected void DoPan(Vector3D handPoint)
         {
             var relativeDeltaDistance = _startHandPoint.DistanceVectorFrom(handPoint, _map.ActualWidth, _map.ActualHeight);
             var deltaX = relativeDeltaDistance.X * _startExtent.Width;
@@ -59,19 +60,19 @@ namespace Kinect4TelerikMap.Gestures
             _map.Center = nextCenter;
         }
 
-        protected override void RunPanning(SkeletonPoint handPoint)
+        protected override void RunPanning(Vector3D handPoint)
         {
             var screenCoordinate = handPoint.ToScreenPoint(_map.ActualWidth, _map.ActualHeight);
             var location = Location.GetCoordinates(_map, screenCoordinate);
             DoPan(handPoint);
 
-            if (KinectPanning != null)
+            if (Panning != null)
             {
-                KinectPanning(location.ToMapCoord());
+                Panning(location.ToMapCoord());
             }
         }
 
-        protected override void StartPan(SkeletonPoint handPoint)
+        protected override void StartPan(Vector3D handPoint)
         {
             IsPanning = true;
             _startHandPoint = handPoint;
@@ -84,9 +85,9 @@ namespace Kinect4TelerikMap.Gestures
             var currCenter = _map.Center; 
             _startMapCenter = new Location(currCenter.Latitude, currCenter.Longitude);
 
-            if (KinectPanStart != null)
+            if (PanStart != null)
             {
-                KinectPanStart(_startHandCoordinate.ToMapCoord());
+                PanStart(_startHandCoordinate.ToMapCoord());
             }
         }
 
@@ -96,9 +97,9 @@ namespace Kinect4TelerikMap.Gestures
             {
                 IsPanning = false;
 
-                if (KinectPanStop != null)
+                if (PanStop != null)
                 {
-                    KinectPanStop();
+                    PanStop();
                 }
             }
         }

@@ -12,9 +12,6 @@ namespace Leap4TelerikMap.Gestures
     {
 
         private RadMap _map;
-        private double _startDistance;
-        private Point _startLeftHandScreenCoord;
-        private Point _startRightHandScreenCoord;
         private int _startZoomLevel;
         private const float _PixelsDistanteToChangeZoomLevel = 400;
 

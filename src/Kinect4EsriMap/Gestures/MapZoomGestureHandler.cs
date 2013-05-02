@@ -4,6 +4,7 @@ using Kinect4EsriMap.Extensions;
 using Kinect4Map.Gestures;
 using Microsoft.Kinect;
 using ESRI.ArcGIS.Client.Geometry;
+using NUI4Map.Structs;
 
 namespace Kinect4EsriMap.Gestures
 {
@@ -21,9 +22,9 @@ namespace Kinect4EsriMap.Gestures
         #endregion
 
         #region Events
-        public override event Action KinectZoomStarted;
-        public override event Action KinectZoomStopped;
-        public override event Action KinectZooming;
+        public override event Action ZoomStarted;
+        public override event Action ZoomStopped;
+        public override event Action Zooming;
 
         #endregion
 
@@ -49,7 +50,7 @@ namespace Kinect4EsriMap.Gestures
 
         #region Internal Methods
 
-        protected override void StartZoom(SkeletonPoint rightHandPoint, SkeletonPoint leftHandPoint)
+        protected override void StartZoom(Vector3D rightHandPoint, Vector3D leftHandPoint)
         {
             IsZooming = true;
             _startMapResolution = _map.Resolution;
@@ -58,22 +59,22 @@ namespace Kinect4EsriMap.Gestures
 
             _startDistance = _startRightHandCoordinate.DistanceFrom(_startLeftHandCoordinate);
 
-            if (KinectZoomStarted!= null)
+            if (ZoomStarted!= null)
             {
-                KinectZoomStarted();
+                ZoomStarted();
             }            
         }
 
-        protected override void RunZooming(SkeletonPoint rightHandPoint, SkeletonPoint leftHandPoint)
+        protected override void RunZooming(Vector3D rightHandPoint, Vector3D leftHandPoint)
         {
             var rightHandCoordinate = rightHandPoint.ToEsriWebMercatorMapPoint(_map);
             var leftHandCoordinate = leftHandPoint.ToEsriWebMercatorMapPoint(_map);
 
             DoZoomMap(rightHandCoordinate, leftHandCoordinate);
 
-            if (KinectZooming != null)
+            if (Zooming != null)
             {
-                KinectZooming();
+                Zooming();
             }
         }
 
@@ -82,9 +83,9 @@ namespace Kinect4EsriMap.Gestures
             if (IsZooming)
             {
                 IsZooming = false;
-                if (KinectZoomStopped != null)
+                if (ZoomStopped != null)
                 {
-                    KinectZoomStopped();
+                    ZoomStopped();
                 }                
             }
         }

@@ -3,13 +3,14 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Kinect4Map.Extensions;
-using Microsoft.Kinect;
 using System.Windows;
+using NUI4Map.Drawing;
+using NUI4Map.Structs;
 
 
-namespace Kinect4Map.Drawing
+namespace NJI4Map.Drawing
 {
-    public class HandsDrawer : IHandsDrawer
+    public class ControllerDrawer : IControllerDrawer
     {
 
         #region Attributes
@@ -17,17 +18,18 @@ namespace Kinect4Map.Drawing
         private Image _rightHandImage;
         private Image _leftHandImage;
 
-        private HandsState _handsState;
+        private ControllerState _handsState;
         #endregion
 
         #region Properties
         public Image RightHandImage
         {
             get { return _rightHandImage; }
-            set { 
-                    _rightHandImage = value;
-                    CreateTransformGroup(_rightHandImage);
-                }
+            set
+            {
+                _rightHandImage = value;
+                CreateTransformGroup(_rightHandImage);
+            }
         }
 
         public Image LeftHandImage
@@ -55,28 +57,28 @@ namespace Kinect4Map.Drawing
         #endregion
 
         #region Public Methods
-        
+
         public void Initialize()
         {
-            SetHandsState(HandsState.Browsing);
+            SetHandsState(ControllerState.Browsing);
             UpdateRightHandImage();
             UpdateLeftHandImage();
         }
 
-        public void DrawHands(Joint rightHandJoint, Joint leftHandJoint, double screenWidth, double screenHeight)
+        public void DrawHands(Vector3D rightHandPoint, Vector3D leftHandPoint, double screenWidth, double screenHeight)
         {
-            DrawRightHand(rightHandJoint, screenWidth, screenHeight);
-            DrawLeftHand(leftHandJoint, screenWidth, screenHeight);
+            DrawRightHand(rightHandPoint, screenWidth, screenHeight);
+            DrawLeftHand(leftHandPoint, screenWidth, screenHeight);
         }
 
-        public void DrawRightHand(Joint rightHandJoint, double screenWidth, double screenHeight)
+        public void DrawRightHand(Vector3D rightHandPoint, double screenWidth, double screenHeight)
         {
-            DrawHand(rightHandJoint, RightHandImage, screenWidth, screenHeight);
+            DrawHand(rightHandPoint, RightHandImage, screenWidth, screenHeight);
         }
 
-        public void DrawLeftHand(Joint rightHandJoint, double screenWidth, double screenHeight)
+        public void DrawLeftHand(Vector3D leftHandPoint, double screenWidth, double screenHeight)
         {
-            DrawHand(rightHandJoint, LeftHandImage, screenWidth, screenHeight);
+            DrawHand(leftHandPoint, LeftHandImage, screenWidth, screenHeight);
         }
 
         public void HideRightHand()
@@ -89,7 +91,7 @@ namespace Kinect4Map.Drawing
             HideHand(LeftHandImage);
         }
 
-        public void SetHandsState(HandsState handState)
+        public void SetHandsState(ControllerState handState)
         {
             var stateChanged = (_handsState != handState);
             _handsState = handState;
@@ -111,13 +113,13 @@ namespace Kinect4Map.Drawing
             if (RightHandImage == null) return;
             switch (_handsState)
             {
-                case HandsState.Browsing:
+                case ControllerState.Browsing:
                     RightHandImage.Source = RightHandBrowsingSource;
                     break;
-                case HandsState.Panning:
+                case ControllerState.Panning:
                     RightHandImage.Source = RightHandPanningSource;
                     break;
-                case HandsState.Zooming:
+                case ControllerState.Zooming:
                     RightHandImage.Source = RightHandZoomingSource;
                     break;
             }
@@ -128,30 +130,23 @@ namespace Kinect4Map.Drawing
             if (LeftHandImage == null) return;
             switch (_handsState)
             {
-                case HandsState.Browsing:
+                case ControllerState.Browsing:
                     LeftHandImage.Source = LeftHandBrowsingSource;
                     break;
-                case HandsState.Panning:
+                case ControllerState.Panning:
                     LeftHandImage.Source = LeftHandPanningSource;
                     break;
-                case HandsState.Zooming:
+                case ControllerState.Zooming:
                     LeftHandImage.Source = LeftHandZoomingSource;
                     break;
             }
         }
 
-        private static void DrawHand(Joint handJoint, Image handImage, double screenWidth, double screenHeight)
+        private static void DrawHand(Vector3D handPoint, Image handImage, double screenWidth, double screenHeight)
         {
-            if (handJoint.TrackingState == JointTrackingState.Tracked)
-            {
-                ShowHand(handImage);
-                var handScreenPoint = handJoint.Position.ToScreenPoint(screenWidth, screenHeight);
-                UpdateHandPosition(handImage, handScreenPoint);
-            }
-            else
-            {
-                HideHand(handImage);
-            }
+            ShowHand(handImage);
+            var handScreenPoint = handPoint.ToScreenPoint(screenWidth, screenHeight);
+            UpdateHandPosition(handImage, handScreenPoint);
         }
 
         private static void ShowHand(Image handImage)
@@ -159,12 +154,12 @@ namespace Kinect4Map.Drawing
             handImage.Visibility = Visibility.Visible;
         }
 
-        private static void HideHand(Image handImage)
+        public static void HideHand(Image handImage)
         {
             handImage.Visibility = Visibility.Hidden;
         }
 
-        private static void UpdateHandPosition(Image handImage, Point newPosition)
+        private static void UpdateHandPosition(Image handImage, System.Windows.Point newPosition)
         {
             var tt = (TranslateTransform)((TransformGroup)handImage.RenderTransform).Children.First(tr => tr is TranslateTransform);
             tt.X = newPosition.X - (handImage.Width / 2);

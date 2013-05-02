@@ -5,6 +5,7 @@ using Kinect4Map.Gestures;
 using MapUtils.Distance;
 using Microsoft.Kinect;
 using Telerik.Windows.Controls;
+using NUI4Map.Structs;
 
 namespace Kinect4TelerikMap.Gestures
 {
@@ -19,9 +20,9 @@ namespace Kinect4TelerikMap.Gestures
         private int _startZoomLevel;
         private const float _PixelsDistanteToChangeZoomLevel = 400;
 
-        public override event Action KinectZooming;
-        public override event Action KinectZoomStarted;
-        public override event Action KinectZoomStopped;
+        public override event Action Zooming;
+        public override event Action ZoomStarted;
+        public override event Action ZoomStopped;
 
         public override object MapComponent
         {
@@ -51,19 +52,19 @@ namespace Kinect4TelerikMap.Gestures
             _map.ZoomLevel = _startZoomLevel + levelDiff;
         }
 
-        protected override void RunZooming(SkeletonPoint rightHandPoint, SkeletonPoint leftHandPoint)
+        protected override void RunZooming(Vector3D rightHandPoint, Vector3D leftHandPoint)
         {
             var rightHandCoordinate = rightHandPoint.ToScreenPoint(_map.ActualWidth, _map.ActualHeight);
             var leftHandCoordinate = leftHandPoint.ToScreenPoint(_map.ActualWidth, _map.ActualHeight);
             DoZoomMap(rightHandCoordinate, leftHandCoordinate);
             
-            if (KinectZooming != null)
+            if (Zooming != null)
             {
-                KinectZooming();
+                Zooming();
             }
         }
 
-        protected override void StartZoom(SkeletonPoint rightHandPoint, SkeletonPoint leftHandPoint)
+        protected override void StartZoom(Vector3D rightHandPoint, Vector3D leftHandPoint)
         {
             IsZooming = true;
             _startRightHandScreenCoord = rightHandPoint.ToScreenPoint(_map.ActualWidth, _map.ActualHeight);
@@ -71,9 +72,9 @@ namespace Kinect4TelerikMap.Gestures
             _startDistance = _startRightHandScreenCoord.DistanceFrom(_startLeftHandScreenCoord);
             _startZoomLevel = _map.ZoomLevel;
            
-            if (KinectZoomStarted != null)
+            if (ZoomStarted != null)
             {
-                KinectZoomStarted();
+                ZoomStarted();
             }
         }
 
@@ -83,9 +84,9 @@ namespace Kinect4TelerikMap.Gestures
             {
                 IsZooming = false;
                 
-                if (KinectZoomStopped != null)
+                if (ZoomStopped != null)
                 {
-                    KinectZoomStopped();
+                    ZoomStopped();
                 }
             }
         }

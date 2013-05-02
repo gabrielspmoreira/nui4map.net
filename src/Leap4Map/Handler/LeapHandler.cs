@@ -2,10 +2,11 @@
 using System.Linq;
 using System.Windows;
 using Leap;
+using NUI4Map.Handler;
 
-namespace Leap4Map.LeapUtils
+namespace Leap4Map.Handler
 {
-    public class LeapHandler
+    public class LeapHandler : INUIHandler
     {
         public Controller controller;
         public LeapListener listener;
@@ -15,7 +16,7 @@ namespace Leap4Map.LeapUtils
         public event Action<Controller> OnDisconnect;
         public event Action<Controller> OnInitialize;
         public event Action<Controller> OnExit;
-        public event Action<Controller> OnFrame;
+        public event Action<object> OnFrame;
 
         #endregion
 
@@ -37,7 +38,10 @@ namespace Leap4Map.LeapUtils
 
         void listener_FrameEvent(Controller obj)
         {
-            OnFrame(obj);
+            if (OnFrame != null)
+            {
+                OnFrame(obj);
+            }
         }
 
         public void Stop()
@@ -45,11 +49,6 @@ namespace Leap4Map.LeapUtils
             // Remove the sample listener when done
             controller.RemoveListener(listener);
             controller.Dispose();
-        }
-
-        public void OnFrameDelegate(Controller controller)
-        {
-
         }
     }
 

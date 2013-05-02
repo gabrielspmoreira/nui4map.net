@@ -6,6 +6,7 @@ using MapUtils.Structs;
 using Microsoft.Kinect;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Map;
+using NUI4Map.Structs;
 
 namespace Kinect4TelerikMap.Gestures
 {
@@ -15,7 +16,7 @@ namespace Kinect4TelerikMap.Gestures
 
         private RadMap _map;
 
-        public override event Action<MapCoord> KinectMapClick;
+        public override event Action<MapCoord> NUIMapClick;
         public override event Action<MapCoord> MouseMapClick;
 
         public override object MapComponent
@@ -49,12 +50,12 @@ namespace Kinect4TelerikMap.Gestures
             }
         }
 
-        protected override void DoMapClick(SkeletonPoint handPoint)
+        protected override void DoMapClick(Vector3D handPoint)
         {
             Location mapPoint = handPoint.ToTelerikMapLocation(_map);
-            if (KinectMapClick != null)
+            if (NUIMapClick != null)
             {
-                KinectMapClick(mapPoint.ToMapCoord());
+                NUIMapClick(mapPoint.ToMapCoord());
             }                
         }
 

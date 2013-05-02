@@ -61,22 +61,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DI\KinectMapModule.cs" />
-    <Compile Include="Drawing\HandsDrawer.cs" />
-    <Compile Include="Drawing\HandsState.cs" />
-    <Compile Include="Drawing\IHandsDrawer.cs" />
+    <Compile Include="Drawing\ControllerDrawer.cs" />
     <Compile Include="Extensions\KinectExtensions.cs" />
     <Compile Include="Extensions\MapExtensions.cs" />
-    <Compile Include="Gestures\IMapClickGestureHandler.cs" />
-    <Compile Include="Gestures\IMapPanGestureHandler.cs" />
-    <Compile Include="Gestures\IMapZoomGestureHandler.cs" />
     <Compile Include="Gestures\MapClickGestureHandlerBase.cs" />
     <Compile Include="Gestures\MapPanGestureHandlerBase.cs" />
     <Compile Include="Gestures\MapZoomGestureHandlerBase.cs" />
-    <Compile Include="KinectUtils\KinectHandler.cs" />
-    <Compile Include="KinectUtils\SkeletalExtensions.cs" />
-    <Compile Include="MapUtils\IMapHandler.cs" />
+    <Compile Include="Handler\KinectHandler.cs" />
+    <Compile Include="Extensions\SkeletalExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Structs\Hand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -87,6 +80,10 @@
     <ProjectReference Include="..\MapUtils\MapUtils.csproj">
       <Project>{C0270F25-C396-48D9-A8CC-3C4D51F65B13}</Project>
       <Name>MapUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NUI4Map\NUI4Map.csproj">
+      <Project>{cdc34235-020e-4368-962c-85c182c4d4ac}</Project>
+      <Name>NUI4Map</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

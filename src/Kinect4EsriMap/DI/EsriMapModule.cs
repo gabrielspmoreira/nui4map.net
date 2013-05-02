@@ -1,8 +1,9 @@
 ﻿using Autofac;
 using Kinect4EsriMap.Gestures;
-using Kinect4EsriMap.MapUtils;
+using Kinect4EsriMap.Handler;
 using Kinect4Map.Gestures;
-using Kinect4Map.MapUtils;
+using NUI4Map.Gestures;
+using NUI4Map.Handler;
 
 namespace Kinect4EsriMap.DI
 {

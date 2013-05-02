@@ -5,6 +5,7 @@ using MapUtils.Distance;
 using MapUtils.Structs;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Map;
+using NUI4Map.Structs;
 
 namespace Leap4TelerikMap.Extensions
 {
@@ -24,7 +25,7 @@ namespace Leap4TelerikMap.Extensions
             return mapCoord;
         }
 
-        public static Location ToTelerikMapLocation(this Leap.Vector handPoint, RadMap map)
+        public static Location ToTelerikMapLocation(this Vector3D handPoint, RadMap map)
         {
             var screenPoint = handPoint.ToScreenPoint(map.ActualWidth, map.ActualHeight);
             return Location.GetCoordinates(map, screenPoint);

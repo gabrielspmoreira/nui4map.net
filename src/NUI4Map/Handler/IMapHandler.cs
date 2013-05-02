@@ -2,7 +2,7 @@ using System;
 using System.Windows;
 using MapUtils.Structs;
 
-namespace Leap4Map.MapUtils
+namespace NUI4Map.Handler
 {
     public interface IMapHandler
     {

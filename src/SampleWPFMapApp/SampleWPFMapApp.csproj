@@ -184,6 +184,10 @@
       <Project>{C0270F25-C396-48D9-A8CC-3C4D51F65B13}</Project>
       <Name>MapUtils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NUI4Map\NUI4Map.csproj">
+      <Project>{cdc34235-020e-4368-962c-85c182c4d4ac}</Project>
+      <Name>NUI4Map</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\.NETFramework\v4.0\Microsoft.Expression.Blend.WPF.targets" />

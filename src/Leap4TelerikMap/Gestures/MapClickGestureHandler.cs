@@ -5,6 +5,7 @@ using MapUtils.Structs;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Map;
 using Leap4Map.Gestures;
+using NUI4Map.Structs;
 
 namespace Leap4TelerikMap.Gestures
 {
@@ -14,7 +15,7 @@ namespace Leap4TelerikMap.Gestures
 
         private RadMap _map;
 
-        public override event Action<MapCoord> LeapMapClick;
+        public override event Action<MapCoord> NUIMapClick;
         public override event Action<MapCoord> MouseMapClick;
 
         public override object MapComponent
@@ -48,12 +49,12 @@ namespace Leap4TelerikMap.Gestures
             }
         }
 
-        protected override void DoMapClick(Leap.Vector handPoint)
+        protected override void DoMapClick(Vector3D handPoint)
         {
             Location mapPoint = handPoint.ToTelerikMapLocation(_map);
-            if (LeapMapClick != null)
+            if (NUIMapClick != null)
             {
-                LeapMapClick(mapPoint.ToMapCoord());
+                NUIMapClick(mapPoint.ToMapCoord());
             }                
         }
 

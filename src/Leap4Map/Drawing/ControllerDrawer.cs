@@ -3,13 +3,14 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Leap4Map.Extensions;
-using Leap;
 using System.Windows;
+using NUI4Map.Drawing;
+using NUI4Map.Structs;
 
 
 namespace Leap4Map.Drawing
 {
-    public class HandsDrawer : IHandsDrawer
+    public class ControllerDrawer : IControllerDrawer
     {
 
         #region Attributes
@@ -17,7 +18,7 @@ namespace Leap4Map.Drawing
         private Image _rightHandImage;
         private Image _leftHandImage;
 
-        private HandsState _handsState;
+        private ControllerState _handsState;
         #endregion
 
         #region Properties
@@ -58,23 +59,23 @@ namespace Leap4Map.Drawing
         
         public void Initialize()
         {
-            SetHandsState(HandsState.Browsing);
+            SetHandsState(ControllerState.Browsing);
             UpdateRightHandImage();
             UpdateLeftHandImage();
         }
 
-        public void DrawHands(Leap.Vector rightHandPoint, Leap.Vector leftHandPoint, double screenWidth, double screenHeight)
+        public void DrawHands(Vector3D rightHandPoint, Vector3D leftHandPoint, double screenWidth, double screenHeight)
         {
             DrawRightHand(rightHandPoint, screenWidth, screenHeight);
             DrawLeftHand(leftHandPoint, screenWidth, screenHeight);
         }
 
-        public void DrawRightHand(Leap.Vector rightHandPoint, double screenWidth, double screenHeight)
+        public void DrawRightHand(Vector3D rightHandPoint, double screenWidth, double screenHeight)
         {
             DrawHand(rightHandPoint, RightHandImage, screenWidth, screenHeight);
         }
 
-        public void DrawLeftHand(Leap.Vector leftHandPoint, double screenWidth, double screenHeight)
+        public void DrawLeftHand(Vector3D leftHandPoint, double screenWidth, double screenHeight)
         {
             DrawHand(leftHandPoint, LeftHandImage, screenWidth, screenHeight);
         }
@@ -89,7 +90,7 @@ namespace Leap4Map.Drawing
             HideHand(LeftHandImage);
         }
 
-        public void SetHandsState(HandsState handState)
+        public void SetHandsState(ControllerState handState)
         {
             var stateChanged = (_handsState != handState);
             _handsState = handState;
@@ -111,13 +112,13 @@ namespace Leap4Map.Drawing
             if (RightHandImage == null) return;
             switch (_handsState)
             {
-                case HandsState.Browsing:
+                case ControllerState.Browsing:
                     RightHandImage.Source = RightHandBrowsingSource;
                     break;
-                case HandsState.Panning:
+                case ControllerState.Panning:
                     RightHandImage.Source = RightHandPanningSource;
                     break;
-                case HandsState.Zooming:
+                case ControllerState.Zooming:
                     RightHandImage.Source = RightHandZoomingSource;
                     break;
             }
@@ -128,19 +129,19 @@ namespace Leap4Map.Drawing
             if (LeftHandImage == null) return;
             switch (_handsState)
             {
-                case HandsState.Browsing:
+                case ControllerState.Browsing:
                     LeftHandImage.Source = LeftHandBrowsingSource;
                     break;
-                case HandsState.Panning:
+                case ControllerState.Panning:
                     LeftHandImage.Source = LeftHandPanningSource;
                     break;
-                case HandsState.Zooming:
+                case ControllerState.Zooming:
                     LeftHandImage.Source = LeftHandZoomingSource;
                     break;
             }
         }
 
-        private static void DrawHand(Leap.Vector handPoint, Image handImage, double screenWidth, double screenHeight)
+        private static void DrawHand(Vector3D handPoint, Image handImage, double screenWidth, double screenHeight)
         {
             ShowHand(handImage);
             var handScreenPoint = handPoint.ToScreenPoint(screenWidth, screenHeight);

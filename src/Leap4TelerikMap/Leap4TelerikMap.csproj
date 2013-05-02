@@ -81,10 +81,12 @@
       <Project>{C0270F25-C396-48D9-A8CC-3C4D51F65B13}</Project>
       <Name>MapUtils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NUI4Map\NUI4Map.csproj">
+      <Project>{cdc34235-020e-4368-962c-85c182c4d4ac}</Project>
+      <Name>NUI4Map</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="LeapUtils\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

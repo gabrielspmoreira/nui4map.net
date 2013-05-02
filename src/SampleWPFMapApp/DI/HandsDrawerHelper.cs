@@ -7,15 +7,16 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Autofac;
 using Leap4Map.Drawing;
+using NUI4Map.Drawing;
 
 namespace SampleWPFMappApp.DI
 {
     class HandsDrawerHelper
     {
-        public static IHandsDrawer GetHandsDrawer()
+        public static IControllerDrawer GetHandsDrawer()
         {
             var container = DiHelper.GetContainer();
-            var handsDrawer = container.Resolve<IHandsDrawer>();
+            var handsDrawer = container.Resolve<IControllerDrawer>();
 
             handsDrawer.RightHandImage = new Image
             {

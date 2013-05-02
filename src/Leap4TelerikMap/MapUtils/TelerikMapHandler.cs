@@ -2,11 +2,11 @@ using System;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using Leap4Map.MapUtils;
 using MapUtils.Converter;
 using MapUtils.Structs;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Map;
+using NUI4Map.Handler;
 
 
 namespace Leap4TelerikMap.MapUtils

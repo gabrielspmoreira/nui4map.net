@@ -6,6 +6,7 @@ using Kinect4Map.Gestures;
 using MapUtils.Structs;
 using Microsoft.Kinect;
 using ESRI.ArcGIS.Client.Geometry;
+using NUI4Map.Structs;
 
 namespace Kinect4EsriMap.Gestures
 {
@@ -17,7 +18,7 @@ namespace Kinect4EsriMap.Gestures
 
         private Envelope _startExtent;
         private MapPoint _startHandCoordinate;
-        private SkeletonPoint _startHandPoint;
+        private Vector3D _startHandPoint;
 
         #endregion
 
@@ -42,27 +43,27 @@ namespace Kinect4EsriMap.Gestures
         #endregion
 
         #region Events
-        public override event Action<MapCoord> KinectPanStart;
-        public override event Action KinectPanStop;
-        public override event Action<MapCoord> KinectPanning;
+        public override event Action<MapCoord> PanStart;
+        public override event Action PanStop;
+        public override event Action<MapCoord> Panning;
         #endregion
 
         #region Private Methods
 
-        protected override void StartPan(SkeletonPoint handPoint)
+        protected override void StartPan(Vector3D handPoint)
         {
             IsPanning = true;
             _startHandPoint = handPoint;
             _startHandCoordinate = handPoint.ToEsriWebMercatorMapPoint(_map);
             _startExtent = new Envelope(_map.Extent.XMin, _map.Extent.YMin, _map.Extent.XMax, _map.Extent.YMax);
 
-            if (KinectPanStart != null)
+            if (PanStart != null)
             {
-                KinectPanStart(_startHandCoordinate.ToMapCoord());
+                PanStart(_startHandCoordinate.ToMapCoord());
             }
         }
 
-        protected override void RunPanning(SkeletonPoint handPoint)
+        protected override void RunPanning(Vector3D handPoint)
         {
             DoPan(handPoint);      
         }
@@ -73,14 +74,14 @@ namespace Kinect4EsriMap.Gestures
             {
                 IsPanning = false;
 
-                if (KinectPanStop != null)
+                if (PanStop != null)
                 {
-                    KinectPanStop();
+                    PanStop();
                 }                
             }
         }
 
-        protected void DoPan(SkeletonPoint handPoint)
+        protected void DoPan(Vector3D handPoint)
         {
             var mapExtentDeltaX = (_startExtent.XMax - _startExtent.XMin);
             var mapExtentDeltaY = (_startExtent.YMax - _startExtent.YMin);
@@ -99,10 +100,10 @@ namespace Kinect4EsriMap.Gestures
 
             _map.Extent = nextExtent;
 
-            if (KinectPanning != null)
+            if (Panning != null)
             {
                 var handCoordinate = handPoint.ToEsriWebMercatorMapPoint(_map);
-                KinectPanning(handCoordinate.ToMapCoord());           
+                Panning(handCoordinate.ToMapCoord());           
             }
         }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Kinect4TelerikMap.Structs
+namespace NUI4Map.Structs
 {
     public enum Hand
     {

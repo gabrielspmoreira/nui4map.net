@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace Leap4Map.LeapUtils
+namespace Leap4Map.Handler
 {
     public class LeapListener : Listener
     {

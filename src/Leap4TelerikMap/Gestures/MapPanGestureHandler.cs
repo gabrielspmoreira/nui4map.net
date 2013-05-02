@@ -6,6 +6,7 @@ using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Map;
 using Leap4Map.Gestures;
 using Leap4Map.Extensions;
+using NUI4Map.Structs;
 
 namespace Leap4TelerikMap.Gestures
 {
@@ -16,7 +17,7 @@ namespace Leap4TelerikMap.Gestures
         private RadMap _map;
         private Rect _startExtent;
         private Location _startHandCoordinate;
-        private Leap.Vector _startHandPoint;
+        private Vector3D _startHandPoint;
         private Location _startMapCenter;
 
         public override event Action<MapCoord> Panning;
@@ -44,7 +45,7 @@ namespace Leap4TelerikMap.Gestures
             }
         }
 
-        protected void DoPan(Leap.Vector handPoint)
+        protected void DoPan(Vector3D handPoint)
         {
             var relativeDeltaDistance = _startHandPoint.DistanceVectorFrom(handPoint, _map.ActualWidth, _map.ActualHeight);
             var deltaX = relativeDeltaDistance.X * _startExtent.Width;
@@ -58,7 +59,7 @@ namespace Leap4TelerikMap.Gestures
             _map.Center = nextCenter;
         }
 
-        protected override void RunPanning(Leap.Vector handPoint)
+        protected override void RunPanning(Vector3D handPoint)
         {
             var screenCoordinate = handPoint.ToScreenPoint(_map.ActualWidth, _map.ActualHeight);
             var location = Location.GetCoordinates(_map, screenCoordinate);
@@ -70,7 +71,7 @@ namespace Leap4TelerikMap.Gestures
             }
         }
 
-        protected override void StartPan(Leap.Vector handPoint)
+        protected override void StartPan(Vector3D handPoint)
         {
             IsPanning = true;
             _startHandPoint = handPoint;

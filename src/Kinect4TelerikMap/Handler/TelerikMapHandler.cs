@@ -2,14 +2,14 @@ using System;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using Kinect4Map.MapUtils;
 using MapUtils.Converter;
 using MapUtils.Structs;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Map;
+using NUI4Map.Handler;
 
 
-namespace Kinect4TelerikMap.MapUtils
+namespace Kinect4TelerikMap.Handler
 {
 
     public class TelerikMapHandler : IMapHandler

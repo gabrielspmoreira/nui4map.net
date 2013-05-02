@@ -1,7 +1,9 @@
 using System;
-using Leap4TelerikMap.Structs;
 using MapUtils.Structs;
 using Leap;
+using Leap4Map.Extensions;
+using NUI4Map.Structs;
+using NUI4Map.Gestures;
 
 namespace Leap4Map.Gestures
 {
@@ -18,18 +20,19 @@ namespace Leap4Map.Gestures
             
         }
 
-        public bool Detect(Leap.Frame frame)
+        public bool Detect(object frame)
         {
-            if (!frame.Hands.Empty)
+            var leapFrame = (Leap.Frame)frame;
+            if (!leapFrame.Hands.Empty)
             {
                 // Get the first hand
-                Leap.Hand hand = frame.Hands[0];
+                Leap.Hand hand = leapFrame.Hands[0];
 
                 // Check if the hand has any fingers
                 var fingers = hand.Fingers;
                 if (!fingers.Empty && fingers.Count == 1 && fingers[0].TipPosition.z < 0)
                 {
-                    Leap.Vector handPoint = fingers[0].TipPosition;
+                    var handPoint = fingers[0].TipPosition.ToVector3D();
 
                     if (!IsPanning)
                     {
@@ -47,8 +50,8 @@ namespace Leap4Map.Gestures
             return IsPanning;
         }
 
-        protected abstract void StartPan(Leap.Vector handPoint);
-        protected abstract void RunPanning(Leap.Vector handPoint);
+        protected abstract void StartPan(Vector3D handPoint);
+        protected abstract void RunPanning(Vector3D handPoint);
         protected abstract void StopPanning();
     }
 }

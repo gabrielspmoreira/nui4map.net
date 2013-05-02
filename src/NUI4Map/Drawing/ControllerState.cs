@@ -1,6 +1,6 @@
-﻿namespace Kinect4EsriMap.Drawing
+﻿namespace NUI4Map.Drawing
 {
-    public enum HandMapSymbol
+    public enum ControllerState
     {
         Browsing,
         Panning,

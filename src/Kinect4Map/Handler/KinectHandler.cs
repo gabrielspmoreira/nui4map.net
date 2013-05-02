@@ -3,10 +3,11 @@ using System.Linq;
 using Kinect.Toolbox;
 using Microsoft.Kinect;
 using System.Windows;
+using NUI4Map.Handler;
 
-namespace Kinect4Map.KinectUtils
+namespace Kinect4Map.Handler
 {
-    public class KinectHandler
+    public class KinectHandler : INUIHandler
     {
         #region Attributes
         protected KinectSensor kinectSensor;
@@ -24,26 +25,11 @@ namespace Kinect4Map.KinectUtils
         #endregion
 
         #region Events
-        public event Action<SkeletonFrame> CapturedSkeletonFrame;
+        public event Action<object> OnFrame;
         public event Action SensorInitialized;
         #endregion
 
-        #region Static Singleton Temp
-
-        private static KinectHandler kinectHandler;
-        // Substituir por Dependency Injection
-        public static KinectHandler GetKinectHandler()
-        {
-            if (kinectHandler == null)
-            {
-                kinectHandler = new KinectHandler();
-            }
-            return kinectHandler;
-        }
-
-        #endregion
-
-        public void Initialize()
+        public void Start()
         {
             try
             {
@@ -78,7 +64,7 @@ namespace Kinect4Map.KinectUtils
             }
         }
 
-        public void Clean()
+        public void Stop()
         {
             if (kinectSensor != null)
             {
@@ -166,7 +152,7 @@ namespace Kinect4Map.KinectUtils
                 case KinectStatus.Disconnected:
                     if (kinectSensor == e.Sensor)
                     {
-                        Clean();
+                        Stop();
                         MessageBox.Show("Kinect was disconnected");
                     }
                     break;
@@ -175,7 +161,7 @@ namespace Kinect4Map.KinectUtils
                 case KinectStatus.NotPowered:
                     if (kinectSensor == e.Sensor)
                     {
-                        Clean();
+                        Stop();
                         MessageBox.Show("Kinect is no more powered");
                     }
                     break;
@@ -198,9 +184,11 @@ namespace Kinect4Map.KinectUtils
                 if (skeletons.All(s => s.TrackingState == SkeletonTrackingState.NotTracked))
                     return;
 
-                if (CapturedSkeletonFrame != null)
+                var skeleton = GetFirstTrackedSkeleton(frame);
+
+                if (OnFrame != null)
                 {
-                    CapturedSkeletonFrame(frame);
+                    OnFrame(skeleton);
                 }
             }
         }

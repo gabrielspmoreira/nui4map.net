@@ -1,6 +1,6 @@
 using System;
 
-namespace Leap4Map.Gestures
+namespace NUI4Map.Gestures
 {
     public interface IMapZoomGestureHandler
     {
@@ -10,6 +10,6 @@ namespace Leap4Map.Gestures
         event Action Zooming;
         bool IsZooming { get; }
 
-        bool Detect(Leap.Frame frame);
+        bool Detect(object frame);
     }
 }

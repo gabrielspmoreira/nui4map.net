@@ -1,10 +1,10 @@
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using Microsoft.Kinect;
+using NUI4Map.Structs;
 
-namespace Kinect4Map.Drawing
+namespace NUI4Map.Drawing
 {
-    public interface IHandsDrawer
+    public interface IControllerDrawer
     {
         Image RightHandImage { get; set; }
         Image LeftHandImage { get; set; }
@@ -15,12 +15,12 @@ namespace Kinect4Map.Drawing
         BitmapImage RightHandZoomingSource { get; set; }
         BitmapImage LeftHandZoomingSource { get; set; }
         void Initialize();
-        void DrawHands(Joint rightHandJoint, Joint leftHandJoint, double screenWidth, double screenHeight);
-        void DrawRightHand(Joint rightHandJoint, double screenWidth, double screenHeight);
-        void DrawLeftHand(Joint rightHandJoint, double screenWidth, double screenHeight);
+        void DrawHands(Vector3D rightHandPoint, Vector3D leftHandPoint, double screenWidth, double screenHeight);
+        void DrawRightHand(Vector3D rightHandPoint, double screenWidth, double screenHeight);
+        void DrawLeftHand(Vector3D rightHandPoint, double screenWidth, double screenHeight);
         void HideRightHand();
         void HideLeftHand();
-        void SetHandsState(HandsState handState);
+        void SetHandsState(ControllerState handState);
         
     }
 }

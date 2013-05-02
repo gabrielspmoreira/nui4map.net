@@ -1,18 +1,19 @@
 ﻿using Microsoft.Kinect;
+using NUI4Map.Structs;
 
 namespace Kinect4Map.Extensions
 {
     static class KinectExtensions
     {
-        public static SkeletonPoint ScaleTo(this SkeletonPoint skeletonPoint, double width, double height)
+        public static Vector3D ScaleTo(this Vector3D skeletonPoint, double width, double height)
         {
             return ScaleTo(skeletonPoint, width, height, 1.0f, 1.0f);
         }
 
 
-        public static SkeletonPoint ScaleTo(this SkeletonPoint skeletonPoint, double width, double height, double skeletonMaxX, double skeletonMaxY)
+        public static Vector3D ScaleTo(this Vector3D skeletonPoint, double width, double height, double skeletonMaxX, double skeletonMaxY)
         {
-            var position = new SkeletonPoint
+            var position = new Vector3D
                                 {
                                     X = Scale(width, skeletonMaxX, skeletonPoint.X),
                                     Y = Scale(height, skeletonMaxY, -skeletonPoint.Y),

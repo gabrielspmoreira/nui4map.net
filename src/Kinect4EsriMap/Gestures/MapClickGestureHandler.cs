@@ -4,6 +4,7 @@ using Kinect4Map.Gestures;
 using MapUtils.Structs;
 using Microsoft.Kinect;
 using ESRI.ArcGIS.Client;
+using NUI4Map.Structs;
 
 namespace Kinect4EsriMap.Gestures
 {
@@ -40,18 +41,18 @@ namespace Kinect4EsriMap.Gestures
         #endregion
 
         #region Events
-        public override event Action<MapCoord> KinectMapClick;
+        public override event Action<MapCoord> NUIMapClick;
         public override event Action<MapCoord> MouseMapClick;
         #endregion
 
         #region Private Methods
 
-        protected override void DoMapClick(SkeletonPoint handPoint)
+        protected override void DoMapClick(Vector3D handPoint)
         {
             var mapPoint = handPoint.ToEsriWebMercatorMapPoint(_map);
-            if (KinectMapClick != null)
+            if (NUIMapClick != null)
             {
-                KinectMapClick(mapPoint.ToMapCoord());
+                NUIMapClick(mapPoint.ToMapCoord());
             }            
         }
 

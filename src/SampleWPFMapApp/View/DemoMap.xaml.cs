@@ -5,13 +5,16 @@ using System.Windows.Controls;
 using Autofac;
 using Leap4Map.Drawing;
 using Leap4Map.Gestures;
-using Leap4Map.LeapUtils;
-using Leap4Map.MapUtils;
-using Leap4TelerikMap.Structs;
+using Leap4Map.Handler;
 using MapUtils.Structs;
 using SampleWPFMappApp.DI;
 using Leap;
 using System.Diagnostics;
+using NUI4Map.Drawing;
+using Leap4Map.Extensions;
+using NUI4Map.Gestures;
+using Kinect4Map.KinectUtils;
+using NUI4Map.Handler;
 
 namespace SampleWPFMapApp.View
 {
@@ -22,12 +25,12 @@ namespace SampleWPFMapApp.View
     {
         #region Attributes
 
-        private LeapHandler _leapHandler;
+        private INUIHandler _nuiHandler;
         
         private IMapZoomGestureHandler _zoomGestureHandler;
         private IMapPanGestureHandler _panGestureHandler;
         private IMapClickGestureHandler _mapClickGestureHandler;
-        private IHandsDrawer _handsDrawer;
+        private IControllerDrawer _handsDrawer;
 
         private readonly IContainer _container;
 
@@ -57,10 +60,10 @@ namespace SampleWPFMapApp.View
             Grid.SetRow(map,0);
             ViewGrid.Children.Insert(0, map);
 
-            _leapHandler = new LeapHandler();
-            _leapHandler.Start();
-
-            _leapHandler.OnFrame += LeapHandler_OnFrame;
+            _nuiHandler = _container.Resolve<INUIHandler>();
+            _nuiHandler.OnFrame += LeapHandler_OnFrame;
+            _nuiHandler.Start();
+            
 
             _zoomGestureHandler = _container.Resolve<IMapZoomGestureHandler>();
             _zoomGestureHandler.MapComponent = map;
@@ -70,23 +73,8 @@ namespace SampleWPFMapApp.View
 
             _mapClickGestureHandler = _container.Resolve<IMapClickGestureHandler>();
             _mapClickGestureHandler.MapComponent = map;
-            _mapClickGestureHandler.LeapMapClick += MapClick;
+            _mapClickGestureHandler.NUIMapClick += MapClick;
             _mapClickGestureHandler.MouseMapClick += MapClick;
-
-            /*_kinectHandler = KinectHandler.GetKinectHandler();
-            _kinectHandler.CapturedSkeletonFrame += kinectHandler_CapturedSkeletonFrame;
-            _kinectHandler.Initialize();
-
-            _zoomGestureHandler = _container.Resolve<IMapZoomGestureHandler>();
-            _zoomGestureHandler.MapComponent = map;
-
-            _panGestureHandler = _container.Resolve<IMapPanGestureHandler>();
-            _panGestureHandler.MapComponent = map;
-
-            _mapClickGestureHandler = _container.Resolve<IMapClickGestureHandler>();
-            _mapClickGestureHandler.MapComponent = map;
-            _mapClickGestureHandler.KinectMapClick += MapClick;
-            _mapClickGestureHandler.MouseMapClick += MapClick;*/
 
             _handsDrawer = HandsDrawerHelper.GetHandsDrawer();
             // Incluindo imagens na tela para que sejam exibidas quando o usuário interagir com Kinect
@@ -94,17 +82,10 @@ namespace SampleWPFMapApp.View
             ViewGrid.Children.Add(_handsDrawer.LeftHandImage);
         }
 
-        private void LeapHandler_OnFrame(Controller controller)
+        private void LeapHandler_OnFrame(object controller)
         {
             // Get the most recent frame and report some basic information
-		    Leap.Frame frame = controller.Frame ();
-
-		    /*SafeWriteLine ("Frame id: " + frame.Id
-                        + ", timestamp: " + frame.Timestamp
-                        + ", hands: " + frame.Hands.Count
-                        + ", fingers: " + frame.Fingers.Count
-                        + ", tools: " + frame.Tools.Count
-                        + ", gestures: " + frame.Gestures ().Count);*/
+		    var frame = ((Controller)controller).Frame ();
 
             if (!frame.Hands.Empty)
             {
@@ -115,13 +96,8 @@ namespace SampleWPFMapApp.View
                 FingerList fingers = hand.Fingers;
                 if (!fingers.Empty)
                 {
-
-                    var count = 0.0;
                     if (fingers.Count > 0)
                     {
-                        //count = fingers[0].TipPosition.DistanceTo(fingers[1].TipPosition);
-                        //SafeWriteLine("Fingers Count: " + fingers.Count + " - Distance: " + count);
-                        //Debug.WriteLine("X: " + fingers[0].TipPosition.x + " Y: " + fingers[0].TipPosition.y);
 
                         this.Dispatcher.BeginInvoke(
                             new Action(() =>
@@ -132,37 +108,23 @@ namespace SampleWPFMapApp.View
                                 }
                                 else*/ if (_panGestureHandler.Detect(frame))
                                 {
-                                    _handsDrawer.SetHandsState(HandsState.Panning);
-                                    _handsDrawer.DrawRightHand(fingers[0].TipPosition, ActualWidth, ActualHeight);
+                                    _handsDrawer.SetHandsState(ControllerState.Panning);
+                                    _handsDrawer.DrawRightHand(fingers[0].TipPosition.ToVector3D(), ActualWidth, ActualHeight);
                                 }
                                 else if (_zoomGestureHandler.Detect(frame))
                                 {
-                                    _handsDrawer.SetHandsState(HandsState.Zooming);
-                                    _handsDrawer.DrawRightHand(fingers[0].TipPosition, ActualWidth, ActualHeight);
+                                    _handsDrawer.SetHandsState(ControllerState.Zooming);
+                                    _handsDrawer.DrawRightHand(fingers[0].TipPosition.ToVector3D(), ActualWidth, ActualHeight);
                                 }
                                 else
                                 {
-                                    _handsDrawer.SetHandsState(HandsState.Browsing);
-                                    _handsDrawer.DrawRightHand(fingers[0].TipPosition, ActualWidth, ActualHeight);
+                                    _handsDrawer.SetHandsState(ControllerState.Browsing);
+                                    _handsDrawer.DrawRightHand(fingers[0].TipPosition.ToVector3D(), ActualWidth, ActualHeight);
                                 }
 
-                                       StatusLabel.Text = hand.SphereRadius.ToString();
+                                StatusLabel.Text = hand.SphereRadius.ToString();
 
                             }));
-
-                        /*var rightFingerPos = fingers.First(f => f.TipPosition.x == fingers.Min(f1 => f1.TipPosition.x));
-                        var leftFingerPos = fingers.First(f => f.TipPosition.x == fingers.Max(f1 => f1.TipPosition.x));
-                        
-                        if (rightFingerPos.Equals(leftFingerPos))
-                        {
-                            _handsDrawer.DrawRightHand(fingers[0].TipPosition, ActualWidth, ActualHeight);
-                        }
-                        else
-                        {
-                            _handsDrawer.DrawHands(rightFingerPos.TipPosition, leftFingerPos.TipPosition, ActualWidth, ActualHeight);
-                        }*/
-
-
                     }
                 }
             }
@@ -173,9 +135,10 @@ namespace SampleWPFMapApp.View
             
         }
 
-        /*private void kinectHandler_CapturedSkeletonFrame(SkeletonFrame skeletonFrame)
+        /*private void kinectHandler_CapturedSkeleton(object frame)
         {
-            ProcessFrame(skeletonFrame);
+            var skeleton = (Skeleton) frame;
+            ProcessFrame(skeleton);
         }
 
         private void ProcessFrame(SkeletonFrame frame)
@@ -261,7 +224,7 @@ namespace SampleWPFMapApp.View
         {
             //_kinectHandler.CapturedSkeletonFrame -= kinectHandler_CapturedSkeletonFrame;
 
-            _leapHandler.Stop();
+            _nuiHandler.Stop();
         } 
 
         private void MapClick(MapCoord coord)

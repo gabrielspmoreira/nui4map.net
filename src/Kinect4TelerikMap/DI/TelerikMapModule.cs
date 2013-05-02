@@ -1,8 +1,10 @@
 using Autofac;
 using Kinect4Map.Gestures;
-using Kinect4Map.MapUtils;
 using Kinect4TelerikMap.Gestures;
-using Kinect4TelerikMap.MapUtils;
+using Kinect4TelerikMap.Handler;
+using Kinect4TelerikMap.Handler;
+using NUI4Map.Gestures;
+using NUI4Map.Handler;
 
 namespace Kinect4TelerikMap.DI
 {
