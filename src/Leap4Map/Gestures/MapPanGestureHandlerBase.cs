@@ -1,6 +1,5 @@
 using System;
 using MapUtils.Structs;
-using Leap;
 using Leap4Map.Extensions;
 using NUI4Map.Structs;
 using NUI4Map.Gestures;
@@ -32,9 +31,11 @@ namespace Leap4Map.Gestures
                 // Check if the hand has any fingers
                 var fingers = hand.Fingers;
                 //if (!fingers.Empty && fingers.Count == 1 && fingers[0].TipPosition.z < 0)
-                if (!fingers.Empty && fingers.Count == 2 && fingers[0].TipPosition.DistanceTo(fingers[1].TipPosition) < 50)
+                if (!fingers.Empty && fingers.Count == 2 && fingers[0].TipPosition.DistanceTo(fingers[1].TipPosition) < 60)
                 {
-                    var handPoint = fingers.First(f => f.TipPosition.x == fingers.Min(f1 => f1.TipPosition.x)).TipPosition.ToVector3D();
+                    var minX = fingers.Min(f1 => f1.TipPosition.x);
+                    var handPoint = fingers.First(f => f.TipPosition.x <= minX).TipPosition.ToVector3D();
+                    //var handPoint = fingers[0].TipPosition.ToVector3D();
 
                     if (!IsPanning)
                     {

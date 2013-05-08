@@ -26,15 +26,15 @@ namespace Leap4Map.Gestures
 
                 // Check if the hand has any fingers
                 var fingers = hand.Fingers;
-                if (!fingers.Empty && fingers.Count == 5)
+                if (!fingers.Empty && fingers.Count >= 3 && hand.SphereRadius >= 60)
                 {
 
                     if (!IsZooming)
                     {
-                        StartZoom(hand);
+                        StartZoom(leapFrame);
                     }
 
-                    RunZooming(hand);
+                    RunZooming(leapFrame);
                 }
                 else
                 {
@@ -48,8 +48,8 @@ namespace Leap4Map.Gestures
             return IsZooming;
         }
 
-        protected abstract void StartZoom(Leap.Hand hand);
-        protected abstract void RunZooming(Leap.Hand hand);
+        protected abstract void StartZoom(Leap.Frame frame);
+        protected abstract void RunZooming(Leap.Frame frame);
         protected abstract void StopZooming();
     }
 }

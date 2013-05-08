@@ -1,5 +1,6 @@
 using System;
 using System.Windows;
+using Leap;
 using MapUtils.Distance;
 using Telerik.Windows.Controls;
 using Leap4Map.Gestures;
@@ -12,8 +13,7 @@ namespace Leap4TelerikMap.Gestures
     {
 
         private RadMap _map;
-        private int _startZoomLevel;
-        private const float _PixelsDistanteToChangeZoomLevel = 400;
+        private Frame _startFrame;
 
         public override event Action Zooming;
         public override event Action ZoomStarted;
@@ -39,19 +39,25 @@ namespace Leap4TelerikMap.Gestures
         }
 
 
-        private void DoZoomMap(Leap.Hand hand)
+        private void DoZoomMap(Leap.Frame frame)
         {
-            var radius = hand.SphereRadius - 60;
+            var scale = frame.ScaleFactor(_startFrame);
 
-            var levelDiff = (int)(radius / 3);
-            _map.ZoomLevel = levelDiff;
+            if (scale >= 1.1)
+            {
+                _map.ZoomLevel += 1;
+                _startFrame = frame;
+            }
+            else if (scale <= 0.95)
+            {
+                _map.ZoomLevel -= 1;
+                _startFrame = frame;
+            }
         }
 
-        protected override void RunZooming(Leap.Hand hand)
+        protected override void RunZooming(Leap.Frame frame)
         {
-           // var rightHandCoordinate = rightHandPoint.ToScreenPoint(_map.ActualWidth, _map.ActualHeight);
-            //var leftHandCoordinate = leftHandPoint.ToScreenPoint(_map.ActualWidth, _map.ActualHeight);
-            DoZoomMap(hand);
+            DoZoomMap(frame);
             
             if (Zooming != null)
             {
@@ -59,13 +65,10 @@ namespace Leap4TelerikMap.Gestures
             }
         }
 
-        protected override void StartZoom(Leap.Hand hand)
+        protected override void StartZoom(Leap.Frame frame)
         {
             IsZooming = true;
-            //_startRightHandScreenCoord = rightHandPoint.ToScreenPoint(_map.ActualWidth, _map.ActualHeight);
-            //_startLeftHandScreenCoord = leftHandPoint.ToScreenPoint(_map.ActualWidth, _map.ActualHeight);
-            //_startDistance = _startRightHandScreenCoord.DistanceFrom(_startLeftHandScreenCoord);
-            _startZoomLevel = _map.ZoomLevel;
+            _startFrame = frame;
            
             if (ZoomStarted != null)
             {
