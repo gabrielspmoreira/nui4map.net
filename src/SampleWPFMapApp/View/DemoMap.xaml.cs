@@ -122,7 +122,7 @@ namespace SampleWPFMapApp.View
                                     _handsDrawer.DrawRightHand(fingers[0].TipPosition.ToVector3D(), ActualWidth, ActualHeight);
                                 }
 
-                                StatusLabel.Text = hand.SphereRadius.ToString();
+                                       StatusLabel.Text = fingers[0].TipPosition.DistanceTo(fingers[1].TipPosition).ToString();
 
                             }));
                     }
