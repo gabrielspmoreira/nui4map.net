@@ -8,7 +8,7 @@
     <ProjectGuid>{F429AE7E-3618-4D94-95B1-6A3D33CAF76C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Leap4Map.SampleWPFMapApp</RootNamespace>
+    <RootNamespace>NUI4Map.SampleWPFMapApp</RootNamespace>
     <AssemblyName>SampleWPFMapApp</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
@@ -164,6 +164,10 @@
     <Content Include="FaceTrackLib.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Kinect4EsriMap\Kinect4EsriMap.csproj">
+      <Project>{e3dc6515-1f27-49ea-b275-5ea26aa73045}</Project>
+      <Name>Kinect4EsriMap</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Kinect4Map\Kinect4Map.csproj">
       <Project>{8241c00c-3175-4895-9019-2e9a77f8286b}</Project>
       <Name>Kinect4Map</Name>

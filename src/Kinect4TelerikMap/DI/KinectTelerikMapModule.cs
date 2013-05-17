@@ -1,7 +1,5 @@
 using Autofac;
-using Kinect4Map.Gestures;
 using Kinect4TelerikMap.Gestures;
-using Kinect4TelerikMap.Handler;
 using Kinect4TelerikMap.Handler;
 using NUI4Map.Gestures;
 using NUI4Map.Handler;
@@ -9,7 +7,7 @@ using NUI4Map.Handler;
 namespace Kinect4TelerikMap.DI
 {
 
-    public class TelerikMapModule : Module
+    public class KinectTelerikMapModule : Module
     {
 
         protected override void Load(ContainerBuilder builder)

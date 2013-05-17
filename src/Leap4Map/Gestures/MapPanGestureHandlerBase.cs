@@ -10,6 +10,7 @@ namespace Leap4Map.Gestures
     public abstract class MapPanGestureHandlerBase : IMapPanGestureHandler
     {
         public bool IsPanning { get; protected set; }
+        public Hand PanningHand { get; protected set; }
         public abstract object MapComponent { get; set; }
         public abstract event Action<MapCoord> PanStart;
         public abstract event Action PanStop;
@@ -27,6 +28,8 @@ namespace Leap4Map.Gestures
             {
                 // Get the first hand
                 Leap.Hand hand = leapFrame.Hands[0];
+
+                PanningHand = Hand.Right;
 
                 // Check if the hand has any fingers
                 var fingers = hand.Fingers;

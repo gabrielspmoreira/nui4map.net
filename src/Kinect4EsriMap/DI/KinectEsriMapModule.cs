@@ -7,7 +7,7 @@ using NUI4Map.Handler;
 
 namespace Kinect4EsriMap.DI
 {
-    public class EsriMapModule : Module
+    public class KinectEsriMapModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {

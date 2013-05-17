@@ -11,7 +11,6 @@ namespace Kinect4Map.Gestures
 {
     public abstract class MapPanGestureHandlerBase : IMapPanGestureHandler
     {
-        public double _minZDistanceFromBody;
         public bool IsPanning { get; protected set; }
         public Hand PanningHand { get; protected set; }
         public abstract object MapComponent { get; set; }
@@ -21,7 +20,7 @@ namespace Kinect4Map.Gestures
 
         protected MapPanGestureHandlerBase()
         {
-            _minZDistanceFromBody = 0.35;
+            
         }
 
         public bool Detect(object frame)
@@ -43,8 +42,8 @@ namespace Kinect4Map.Gestures
             var skeletonHeight = skeleton.Height();
             var minZDistanceFromBody = skeletonHeight / 4;
 
-            var rightHandInFront = rightHandTracked && (shoulderCenterPosition.Z - rightHandPosition.Z >= _minZDistanceFromBody);
-            var leftHandInFront = leftHandTracked && (shoulderCenterPosition.Z - leftHandPosition.Z >= _minZDistanceFromBody);
+            var rightHandInFront = rightHandTracked && (shoulderCenterPosition.Z - rightHandPosition.Z >= minZDistanceFromBody);
+            var leftHandInFront = leftHandTracked && (shoulderCenterPosition.Z - leftHandPosition.Z >= minZDistanceFromBody);
 
             // Just one hand at minimal distance from Shoulder Center
             if (rightHandInFront ^ leftHandInFront)

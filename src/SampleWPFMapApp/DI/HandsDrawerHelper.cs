@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Autofac;
-using Leap4Map.Drawing;
 using NUI4Map.Drawing;
 
-namespace SampleWPFMappApp.DI
+namespace NUI4Map.SampleWPFMapApp.DI
 {
     class HandsDrawerHelper
     {

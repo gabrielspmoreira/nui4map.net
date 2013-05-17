@@ -4,6 +4,7 @@ using Kinect.Toolbox;
 using Microsoft.Kinect;
 using System.Windows;
 using NUI4Map.Handler;
+using NUI4Map.Structs;
 
 namespace Kinect4Map.Handler
 {
@@ -12,6 +13,8 @@ namespace Kinect4Map.Handler
         #region Attributes
         protected KinectSensor kinectSensor;
         protected Skeleton[] skeletons;
+
+        public SensorType SensorType { get; private set; }
         #endregion
 
         #region Properties
@@ -28,6 +31,11 @@ namespace Kinect4Map.Handler
         public event Action<object> OnFrame;
         public event Action SensorInitialized;
         #endregion
+
+        public KinectHandler()
+        {
+            SensorType = SensorType.Kinect;
+        }
 
         public void Start()
         {

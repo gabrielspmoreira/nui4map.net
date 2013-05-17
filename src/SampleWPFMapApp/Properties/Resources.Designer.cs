@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Leap4Map.SampleWPFMapApp.Properties {
+namespace NUI4Map.SampleWPFMapApp.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Leap4Map.SampleWPFMapApp.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Leap4Map.SampleWPFMapApp.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NUI4Map.SampleWPFMapApp.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

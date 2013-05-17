@@ -73,7 +73,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DI\TelerikMapModule.cs" />
+    <Compile Include="DI\KinectTelerikMapModule.cs" />
     <Compile Include="Extensions\TelerikMapExtensions.cs" />
     <Compile Include="Gestures\MapClickGestureHandler.cs" />
     <Compile Include="Gestures\MapZoomGestureHandler.cs" />

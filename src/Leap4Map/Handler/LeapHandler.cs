@@ -3,13 +3,19 @@ using System.Linq;
 using System.Windows;
 using Leap;
 using NUI4Map.Handler;
+using NUI4Map.Structs;
 
 namespace Leap4Map.Handler
 {
     public class LeapHandler : INUIHandler
     {
-        public Controller controller;
-        public LeapListener listener;
+        #region Fields
+
+        public SensorType SensorType { get; private set; }
+        protected Controller controller;
+        protected LeapListener listener;
+
+        #endregion
 
         #region Events
         public event Action<Controller> OnConnect;
@@ -19,6 +25,11 @@ namespace Leap4Map.Handler
         public event Action<object> OnFrame;
 
         #endregion
+
+        public LeapHandler()
+        {
+            SensorType = SensorType.Leap;
+        }
 
         public void Start()
         {

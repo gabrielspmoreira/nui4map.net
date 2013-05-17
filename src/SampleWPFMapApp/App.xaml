@@ -1,4 +1,4 @@
-﻿<Application x:Class="SampleWPFMappApp.App"
+﻿<Application x:Class="NUI4Map.SampleWPFMapApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="View\DemoMap.xaml">

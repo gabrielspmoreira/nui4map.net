@@ -3,21 +3,18 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Autofac;
-using Leap4Map.Drawing;
-using Leap4Map.Gestures;
-using Leap4Map.Handler;
 using MapUtils.Structs;
-using SampleWPFMappApp.DI;
+using Microsoft.Kinect;
+using NUI4Map.SampleWPFMapApp.DI;
+using NUI4Map.Structs;
 using Leap;
-using System.Diagnostics;
 using NUI4Map.Drawing;
 using Leap4Map.Extensions;
 using NUI4Map.Gestures;
-using Kinect4Map.KinectUtils;
 using NUI4Map.Handler;
-using Frame = Leap.Frame;
+using Kinect4Map.Extensions;
 
-namespace SampleWPFMapApp.View
+namespace NUI4Map.SampleWPFMapApp.View
 {
     /// <summary>
     /// Interaction logic for DemoMap.xaml
@@ -37,12 +34,7 @@ namespace SampleWPFMapApp.View
 
         private IMapHandler _mapHandler;
 
-
         #endregion
-
-
-        private Frame _initialFrame;
-        private bool _noHands;
 
         public DemoMap()
         {
@@ -62,11 +54,20 @@ namespace SampleWPFMapApp.View
             Grid.SetRow(map,0);
             ViewGrid.Children.Insert(0, map);
 
+            // To alter the Handler for Kinect or Leap, change the Dependency Injection in DI\DiHelper
             _nuiHandler = _container.Resolve<INUIHandler>();
-            _nuiHandler.OnFrame += LeapHandler_OnFrame;
+
+            if (_nuiHandler.SensorType == SensorType.Leap)
+            {
+                _nuiHandler.OnFrame += LeapHandler_OnFrame;
+            }
+            else if (_nuiHandler.SensorType == SensorType.Kinect)
+            {
+                _nuiHandler.OnFrame += KinectHandler_OnFrame;
+            }
+            
             _nuiHandler.Start();
             
-
             _zoomGestureHandler = _container.Resolve<IMapZoomGestureHandler>();
             _zoomGestureHandler.MapComponent = map;
 
@@ -79,86 +80,72 @@ namespace SampleWPFMapApp.View
             _mapClickGestureHandler.MouseMapClick += MapClick;
 
             _handsDrawer = HandsDrawerHelper.GetHandsDrawer();
-            // Incluindo imagens na tela para que sejam exibidas quando o usuário interagir com Kinect
+            // Setting the images to be presented in the place of user's hands (Kinect) / fingers (Leap)
             ViewGrid.Children.Add(_handsDrawer.RightHandImage);
             ViewGrid.Children.Add(_handsDrawer.LeftHandImage);
         }
 
+        private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _nuiHandler.Stop();
+        } 
+
+        private void MapInitialized()
+        {
+
+        }
+
         private void LeapHandler_OnFrame(object controller)
         {
+            this.Dispatcher.BeginInvoke(
+                new Action(() =>
+                    {
+                        StatusLabel.Text = "";
+                    }));
+
             // Get the most recent frame and report some basic information
-		    var frame = ((Controller)controller).Frame ();
-
-            
-
+		    var frame = ((Controller)controller).Frame();
+ 
             if (!frame.Hands.Empty)
             {
                 // Get the first hand
-                Leap.Hand hand = frame.Hands[0];
+                var hand = frame.Hands[0];
 
                 // Check if the hand has any fingers
-                FingerList fingers = hand.Fingers;
+                var fingers = hand.Fingers;
                 if (!fingers.Empty)
                 {
                     if (fingers.Count > 0)
                     {
-                        if (fingers.Count >= 4)
-                        {
-                            if (_noHands)
-                            {
-                                _initialFrame = frame;
-                                _noHands = false;
-                            }
-                        }
-                        else
-                        {
-                            _noHands = true;
-                        }
-
+                        // Necessary because it is only possible to alter UI elements in the main thread
                         this.Dispatcher.BeginInvoke(
                             new Action(() =>
                                 {
-                                    /*if (_mapClickGestureHandler.Detect(frame))
-                                {
-
-                                }
-                                else*/
-                                    if (_panGestureHandler.Detect(frame))
+                                    if (_mapClickGestureHandler.Detect(frame))
                                     {
+                                        StatusLabel.Text = "Clicking";
+                                    }
+                                    else if (_panGestureHandler.Detect(frame))
+                                    {
+                                        StatusLabel.Text = "Panning";
                                         _handsDrawer.SetHandsState(ControllerState.Panning);
                                         _handsDrawer.DrawRightHand(fingers[0].TipPosition.ToVector3D(), ActualWidth,
                                                                    ActualHeight);
                                     }
                                     else if (_zoomGestureHandler.Detect(frame))
                                     {
+                                        StatusLabel.Text = "Zooming";
                                         _handsDrawer.SetHandsState(ControllerState.Zooming);
                                         _handsDrawer.DrawRightHand(fingers[0].TipPosition.ToVector3D(), ActualWidth,
                                                                    ActualHeight);
                                     }
                                     else
                                     {
+                                        StatusLabel.Text = "Browsing";
                                         _handsDrawer.SetHandsState(ControllerState.Browsing);
                                         _handsDrawer.DrawRightHand(fingers[0].TipPosition.ToVector3D(), ActualWidth,
                                                                    ActualHeight);
                                     }
-
-                                    if (fingers.Count >= 3)
-                                    {
-                                        StatusLabel.Text = hand.SphereRadius.ToString();
-                                    }
-                                    else
-                                    {
-                                        StatusLabel.Text = fingers.Count.ToString();
-                                    }
-                                    
-
-                                    /*var velocity = fingers[0].TipVelocity;
-                                StatusLabel.Text = String.Format("x: {0} / y: {1} / z: {2}", velocity.x, velocity.y, velocity.z);
-                                if (velocity.x > 500)
-                                {
-                                    MessageBox.Show(StatusLabel.Text);
-                                }*/
-
 
                                 }));
                     }
@@ -166,86 +153,58 @@ namespace SampleWPFMapApp.View
             }
         }
 
-        private void MapInitialized()
-        {
-            
-        }
 
-        /*private void kinectHandler_CapturedSkeleton(object frame)
-        {
-            var skeleton = (Skeleton) frame;
-            ProcessFrame(skeleton);
-        }
 
-        private void ProcessFrame(SkeletonFrame frame)
+        private void KinectHandler_OnFrame(object skeletonObj)
         {
             StatusLabel.Text = "";
-            var skeleton = _kinectHandler.GetFirstTrackedSkeleton(frame);
+            var skeleton = (Skeleton) skeletonObj;
 
             if (skeleton != null)
             {
-                //Dictionary<int, string> stabilities = new Dictionary<int, string>();
-                //barycenterHelper.Add(skeleton.Position.ToVector3(), skeleton.TrackingId);
-                //if (!barycenterHelper.IsStable(skeleton.TrackingId))
-                //    return;
-
                 var rightHandJoint = skeleton.Joints.First(j => j.JointType == JointType.HandRight);
-                var rightHandTracked = rightHandJoint.TrackingState == JointTrackingState.Tracked;
-                var rightHandPosition = rightHandJoint.Position;
-                
                 var leftHandJoint = skeleton.Joints.First(j => j.JointType == JointType.HandLeft);
-                var leftHandTracked = leftHandJoint.TrackingState == JointTrackingState.Tracked;
-                var leftHandPosition = leftHandJoint.Position;
-
-                var shoulderCenterPosition =
-                    skeleton.Joints.First(j => j.JointType == JointType.ShoulderCenter).Position;
-                var headPosition = skeleton.Joints.First(j => j.JointType == JointType.Head).Position;
-
-                // Calculate Skeleton Height (without head)
-                var skeletonHeight = skeleton.Height();
-                var minZDistanceFromBody = skeletonHeight/4;
-                _panGestureHandler.MinZDistanceFromBody = minZDistanceFromBody;
-                _zoomGestureHandler.MinZDistanceFromBody = minZDistanceFromBody;
-
 
                 // If panning
-               if (_panGestureHandler.Detect(shoulderCenterPosition, rightHandPosition, rightHandTracked,
-                                              leftHandPosition, leftHandTracked))
+                if (_panGestureHandler.Detect(skeleton))
                 {
                     StatusLabel.Text = "Panning";
-                    _handsDrawer.SetHandsState(HandsState.Panning);
+                    _handsDrawer.SetHandsState(ControllerState.Panning);
 
-                    if (_panGestureHandler.PanningHand == Hand.Right)
+                    if (_panGestureHandler.PanningHand == NUI4Map.Structs.Hand.Right)
                     {
-                        _handsDrawer.DrawRightHand(rightHandJoint, ActualWidth, ActualHeight);
+                        _handsDrawer.DrawRightHand(rightHandJoint.Position.ToVector3D(), ActualWidth, ActualHeight);
                         _handsDrawer.HideLeftHand();
 
-                        if (_mapClickGestureHandler.Detect(rightHandPosition, leftHandPosition, headPosition))
+                        if (_mapClickGestureHandler.Detect(skeleton))
                             StatusLabel.Text = "Clicking";
                     }
                     else
                     {
-                        _handsDrawer.DrawLeftHand(leftHandJoint, ActualWidth, ActualHeight);
+                        _handsDrawer.DrawLeftHand(leftHandJoint.Position.ToVector3D(), ActualWidth, ActualHeight);
                         _handsDrawer.HideRightHand();
 
-                        if (_mapClickGestureHandler.Detect(leftHandPosition, rightHandPosition, headPosition))
+                        if (_mapClickGestureHandler.Detect(skeleton))
                             StatusLabel.Text = "Clicking";
                     }
                 }
                     // If zooming
-                else if (_zoomGestureHandler.Detect(shoulderCenterPosition, rightHandPosition, rightHandTracked,
-                                                    leftHandPosition, leftHandTracked))
+                else if (_zoomGestureHandler.Detect(skeleton))
                 {
                     StatusLabel.Text = "Zooming";
-                    _handsDrawer.SetHandsState(HandsState.Zooming);
-                    _handsDrawer.DrawHands(rightHandJoint, leftHandJoint, ActualWidth, ActualHeight);
+                    _handsDrawer.SetHandsState(ControllerState.Zooming);
+                    _handsDrawer.DrawHands(rightHandJoint.Position.ToVector3D(),
+                                           leftHandJoint.Position.ToVector3D(), 
+                                           ActualWidth, ActualHeight);
                 }
                     // If browsing
                 else
                 {
                     StatusLabel.Text = "Browsing";
-                    _handsDrawer.SetHandsState(HandsState.Browsing);
-                    _handsDrawer.DrawHands(rightHandJoint, leftHandJoint, ActualWidth, ActualHeight);           
+                    _handsDrawer.SetHandsState(ControllerState.Browsing);
+                    _handsDrawer.DrawHands(rightHandJoint.Position.ToVector3D(),
+                                           leftHandJoint.Position.ToVector3D(), 
+                                           ActualWidth, ActualHeight);           
                 }
             }
             else
@@ -254,14 +213,6 @@ namespace SampleWPFMapApp.View
                 _handsDrawer.HideLeftHand();
             }
         }
-        */
-
-        private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            //_kinectHandler.CapturedSkeletonFrame -= kinectHandler_CapturedSkeletonFrame;
-
-            _nuiHandler.Stop();
-        } 
 
         private void MapClick(MapCoord coord)
         {
