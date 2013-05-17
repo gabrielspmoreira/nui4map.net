@@ -1,5 +1,6 @@
 ﻿using System;
 using ESRI.ArcGIS.Client;
+using EsriMapCommons.Extensions;
 using Kinect4EsriMap.Extensions;
 using Kinect4Map.Gestures;
 using Microsoft.Kinect;

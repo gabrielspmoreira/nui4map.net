@@ -1,13 +1,15 @@
-﻿using Autofac;
+using Autofac;
 using EsriMapCommons.Handler;
-using Kinect4EsriMap.Gestures;
+using Leap4EsriMap.Gestures;
 using NUI4Map.Gestures;
 using NUI4Map.Handler;
 
-namespace Kinect4EsriMap.DI
+namespace Leap4EsriMap.DI
 {
-    public class KinectEsriMapModule : Module
+
+    public class LeapEsriMapModule : Module
     {
+
         protected override void Load(ContainerBuilder builder)
         {
              base.Load(builder);
@@ -16,5 +18,8 @@ namespace Kinect4EsriMap.DI
              builder.Register(c => new MapPanGestureHandler()).As<IMapPanGestureHandler>();
              builder.Register(c => new MapZoomGestureHandler()).As<IMapZoomGestureHandler>();          
         }
-    }
+
+    } 
+
 }
+

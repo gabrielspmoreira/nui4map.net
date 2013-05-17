@@ -7,6 +7,7 @@ using Microsoft.Kinect;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Map;
 using NUI4Map.Structs;
+using TelerikMapCommons.Extensions;
 
 namespace Kinect4TelerikMap.Gestures
 {

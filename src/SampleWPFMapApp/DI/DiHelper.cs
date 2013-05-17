@@ -2,6 +2,7 @@
 using Kinect4EsriMap.DI;
 using Kinect4Map.DI;
 using Kinect4TelerikMap.DI;
+using Leap4EsriMap.DI;
 using Leap4Map.DI;
 using Leap4TelerikMap.DI;
 using NUI4Map.Structs;
@@ -11,7 +12,7 @@ namespace NUI4Map.SampleWPFMapApp.DI
     static class DiHelper
     {
         #region Sample Settings
-        public static MapControlType MapControlType = MapControlType.TelerikRadControl;
+        public static MapControlType MapControlType = MapControlType.EsriArcGISRuntime;
         public static SensorType SensorType = SensorType.Leap;
         #endregion
 
@@ -28,6 +29,10 @@ namespace NUI4Map.SampleWPFMapApp.DI
                     if (MapControlType == MapControlType.TelerikRadControl)
                     {
                         builder.RegisterModule(new LeapTelerikMapModule());
+                    }
+                    else if (MapControlType == MapControlType.EsriArcGISRuntime)
+                    {
+                        builder.RegisterModule(new LeapEsriMapModule());
                     }
                 }
                 else if (SensorType == SensorType.Kinect)

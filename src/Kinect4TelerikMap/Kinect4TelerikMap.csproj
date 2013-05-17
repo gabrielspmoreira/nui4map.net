@@ -74,11 +74,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DI\KinectTelerikMapModule.cs" />
-    <Compile Include="Extensions\TelerikMapExtensions.cs" />
+    <Compile Include="Extensions\KinectTelerikMapExtensions.cs" />
     <Compile Include="Gestures\MapClickGestureHandler.cs" />
     <Compile Include="Gestures\MapZoomGestureHandler.cs" />
     <Compile Include="Gestures\MapPanGestureHandler.cs" />
-    <Compile Include="Handler\TelerikMapHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +97,10 @@
     <ProjectReference Include="..\NUI4Map\NUI4Map.csproj">
       <Project>{cdc34235-020e-4368-962c-85c182c4d4ac}</Project>
       <Name>NUI4Map</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TelerikMapCommons\TelerikMapCommons.csproj">
+      <Project>{8c26910e-e43e-4c1c-a700-e4ec780a4170}</Project>
+      <Name>TelerikMapCommons</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

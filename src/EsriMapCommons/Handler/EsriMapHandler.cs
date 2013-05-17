@@ -4,11 +4,11 @@ using System.Windows.Media.Imaging;
 using ESRI.ArcGIS.Client;
 using ESRI.ArcGIS.Client.Geometry;
 using ESRI.ArcGIS.Client.Symbols;
-using Kinect4EsriMap.Extensions;
+using EsriMapCommons.Extensions;
 using MapUtils.Structs;
 using NUI4Map.Handler;
 
-namespace Kinect4EsriMap.Handler
+namespace EsriMapCommons.Handler
 {
     public class EsriMapHandler : IMapHandler
     {

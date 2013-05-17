@@ -7,6 +7,7 @@ using Telerik.Windows.Controls.Map;
 using Leap4Map.Gestures;
 using Leap4Map.Extensions;
 using NUI4Map.Structs;
+using TelerikMapCommons.Extensions;
 
 namespace Leap4TelerikMap.Gestures
 {

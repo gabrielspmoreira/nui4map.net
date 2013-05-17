@@ -1,12 +1,12 @@
-Ôªøusing System;
+using System;
 using EsriMapCommons.Extensions;
-using Kinect4EsriMap.Extensions;
-using Kinect4Map.Gestures;
+using Leap4EsriMap.Extensions;
+using Leap4Map.Gestures;
 using MapUtils.Structs;
 using ESRI.ArcGIS.Client;
 using NUI4Map.Structs;
 
-namespace Kinect4EsriMap.Gestures
+namespace Leap4EsriMap.Gestures
 {
     public class MapClickGestureHandler : MapClickGestureHandlerBase
     {
@@ -33,7 +33,7 @@ namespace Kinect4EsriMap.Gestures
                 }
                 else
                 {
-                    throw new InvalidCastException("N√£o √© uma inst√¢ncia de Esri Map v√°lida.");
+                    throw new InvalidCastException("N„o È uma inst‚ncia de Esri Map v·lida.");
                 }
             }
         }
@@ -53,7 +53,7 @@ namespace Kinect4EsriMap.Gestures
             if (NUIMapClick != null)
             {
                 NUIMapClick(mapPoint.ToMapCoord());
-            }            
+            }
         }
 
         private void MapMouseClickHandler(object sender, Map.MouseEventArgs e)

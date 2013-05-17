@@ -2,12 +2,12 @@ using System;
 using System.Windows;
 using Kinect4Map.Extensions;
 using Kinect4Map.Gestures;
-using Kinect4TelerikMap.Extensions;
 using MapUtils.Structs;
 using Microsoft.Kinect;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Map;
 using NUI4Map.Structs;
+using TelerikMapCommons.Extensions;
 
 namespace Kinect4TelerikMap.Gestures
 {

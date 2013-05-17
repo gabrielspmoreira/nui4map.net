@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E3DC6515-1F27-49EA-B275-5EA26AA73045}</ProjectGuid>
+    <ProjectGuid>{5935BDFA-B1F6-4F3D-A822-D8524C212E33}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Kinect4EsriMap</RootNamespace>
-    <AssemblyName>Kinect4EsriMap</AssemblyName>
+    <RootNamespace>EsriMapCommons</RootNamespace>
+    <AssemblyName>EsriMapCommons</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,17 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac">
-      <HintPath>..\packages\Autofac.3.0.2\lib\net40\Autofac.dll</HintPath>
+    <Reference Include="ESRI.ArcGIS.Client">
+      <HintPath>..\Kinect4EsriMap\libs\ESRI.ArcGIS.Client.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac.Configuration">
-      <HintPath>..\packages\Autofac.3.0.2\lib\net40\Autofac.Configuration.dll</HintPath>
-    </Reference>
-    <Reference Include="ESRI.ArcGIS.Client, Version=2.2.0.629, Culture=neutral, PublicKeyToken=29c6dd6e8553d944, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>libs\ESRI.ArcGIS.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Kinect, Version=1.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -56,33 +47,19 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DI\KinectEsriMapModule.cs" />
-    <Compile Include="Gestures\MapClickGestureHandler.cs" />
-    <Compile Include="Gestures\MapZoomGestureHandler.cs" />
-    <Compile Include="Gestures\MapPanGestureHandler.cs" />
+    <Compile Include="Extensions\EsriMapExtensions.cs" />
+    <Compile Include="Handler\EsriMapHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Extensions\KinectEsriMapExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EsriMapCommons\EsriMapCommons.csproj">
-      <Project>{5935bdfa-b1f6-4f3d-a822-d8524c212e33}</Project>
-      <Name>EsriMapCommons</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Kinect4Map\Kinect4Map.csproj">
-      <Project>{8241C00C-3175-4895-9019-2E9A77F8286B}</Project>
-      <Name>Kinect4Map</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MapUtils\MapUtils.csproj">
-      <Project>{C0270F25-C396-48D9-A8CC-3C4D51F65B13}</Project>
+      <Project>{c0270f25-c396-48d9-a8cc-3c4d51f65b13}</Project>
       <Name>MapUtils</Name>
     </ProjectReference>
     <ProjectReference Include="..\NUI4Map\NUI4Map.csproj">
       <Project>{cdc34235-020e-4368-962c-85c182c4d4ac}</Project>
       <Name>NUI4Map</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

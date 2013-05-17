@@ -1,5 +1,6 @@
 using NUI4Map.Gestures;
 using System;
+using Leap;
 
 namespace Leap4Map.Gestures
 {
@@ -18,11 +19,11 @@ namespace Leap4Map.Gestures
 
         public bool Detect(object frame)
         {
-            var leapFrame = (Leap.Frame)frame;
+            var leapFrame = (Frame)frame;
             if (!leapFrame.Hands.Empty)
             {
                 // Get the first hand
-                Leap.Hand hand = leapFrame.Hands[0];
+                var hand = leapFrame.Hands[0];
 
                 // Check if the hand has any fingers
                 var fingers = hand.Fingers;
@@ -48,8 +49,8 @@ namespace Leap4Map.Gestures
             return IsZooming;
         }
 
-        protected abstract void StartZoom(Leap.Frame frame);
-        protected abstract void RunZooming(Leap.Frame frame);
+        protected abstract void StartZoom(Frame frame);
+        protected abstract void RunZooming(Frame frame);
         protected abstract void StopZooming();
     }
 }

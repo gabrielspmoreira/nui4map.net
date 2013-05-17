@@ -41,7 +41,7 @@ namespace Leap4TelerikMap.Gestures
 
         private void DoZoomMap(Leap.Frame frame)
         {
-            var scale = frame.ScaleFactor(_startFrame);
+            var scale = frame.Hands[0].ScaleFactor(_startFrame);
 
             if (scale >= 1.1)
             {

@@ -17,6 +17,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leap4Map", "Leap4Map\Leap4M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUI4Map", "NUI4Map\NUI4Map.csproj", "{CDC34235-020E-4368-962C-85C182C4D4AC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leap4EsriMap", "Leap4EsriMap\Leap4EsriMap.csproj", "{29F8FA60-0838-4D6D-B59A-682232E7D2C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelerikMapCommons", "TelerikMapCommons\TelerikMapCommons.csproj", "{8C26910E-E43E-4C1C-A700-E4EC780A4170}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsriMapCommons", "EsriMapCommons\EsriMapCommons.csproj", "{5935BDFA-B1F6-4F3D-A822-D8524C212E33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +113,36 @@ Global
 		{CDC34235-020E-4368-962C-85C182C4D4AC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{CDC34235-020E-4368-962C-85C182C4D4AC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{CDC34235-020E-4368-962C-85C182C4D4AC}.Release|x86.ActiveCfg = Release|Any CPU
+		{29F8FA60-0838-4D6D-B59A-682232E7D2C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29F8FA60-0838-4D6D-B59A-682232E7D2C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29F8FA60-0838-4D6D-B59A-682232E7D2C9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{29F8FA60-0838-4D6D-B59A-682232E7D2C9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{29F8FA60-0838-4D6D-B59A-682232E7D2C9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{29F8FA60-0838-4D6D-B59A-682232E7D2C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29F8FA60-0838-4D6D-B59A-682232E7D2C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29F8FA60-0838-4D6D-B59A-682232E7D2C9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{29F8FA60-0838-4D6D-B59A-682232E7D2C9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{29F8FA60-0838-4D6D-B59A-682232E7D2C9}.Release|x86.ActiveCfg = Release|Any CPU
+		{8C26910E-E43E-4C1C-A700-E4EC780A4170}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C26910E-E43E-4C1C-A700-E4EC780A4170}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C26910E-E43E-4C1C-A700-E4EC780A4170}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8C26910E-E43E-4C1C-A700-E4EC780A4170}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8C26910E-E43E-4C1C-A700-E4EC780A4170}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8C26910E-E43E-4C1C-A700-E4EC780A4170}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C26910E-E43E-4C1C-A700-E4EC780A4170}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C26910E-E43E-4C1C-A700-E4EC780A4170}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8C26910E-E43E-4C1C-A700-E4EC780A4170}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8C26910E-E43E-4C1C-A700-E4EC780A4170}.Release|x86.ActiveCfg = Release|Any CPU
+		{5935BDFA-B1F6-4F3D-A822-D8524C212E33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5935BDFA-B1F6-4F3D-A822-D8524C212E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5935BDFA-B1F6-4F3D-A822-D8524C212E33}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5935BDFA-B1F6-4F3D-A822-D8524C212E33}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5935BDFA-B1F6-4F3D-A822-D8524C212E33}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5935BDFA-B1F6-4F3D-A822-D8524C212E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5935BDFA-B1F6-4F3D-A822-D8524C212E33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5935BDFA-B1F6-4F3D-A822-D8524C212E33}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5935BDFA-B1F6-4F3D-A822-D8524C212E33}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5935BDFA-B1F6-4F3D-A822-D8524C212E33}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,9 +1,8 @@
 using Autofac;
-using Leap4Map.Gestures;
 using Leap4TelerikMap.Gestures;
-using Leap4TelerikMap.MapUtils;
 using NUI4Map.Gestures;
 using NUI4Map.Handler;
+using TelerikMapCommons.Handler;
 
 namespace Leap4TelerikMap.DI
 {

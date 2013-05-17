@@ -1,11 +1,11 @@
 using System;
-using System.Windows;
 using Leap4TelerikMap.Extensions;
 using MapUtils.Structs;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Map;
 using Leap4Map.Gestures;
 using NUI4Map.Structs;
+using TelerikMapCommons.Extensions;
 
 namespace Leap4TelerikMap.Gestures
 {

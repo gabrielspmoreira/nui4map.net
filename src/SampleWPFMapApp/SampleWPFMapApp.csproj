@@ -164,6 +164,10 @@
     <Content Include="FaceTrackLib.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EsriMapCommons\EsriMapCommons.csproj">
+      <Project>{5935bdfa-b1f6-4f3d-a822-d8524c212e33}</Project>
+      <Name>EsriMapCommons</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Kinect4EsriMap\Kinect4EsriMap.csproj">
       <Project>{e3dc6515-1f27-49ea-b275-5ea26aa73045}</Project>
       <Name>Kinect4EsriMap</Name>
@@ -175,6 +179,10 @@
     <ProjectReference Include="..\Kinect4TelerikMap\Kinect4TelerikMap.csproj">
       <Project>{a4c646bc-aaa5-445c-b439-ddf11584df8f}</Project>
       <Name>Kinect4TelerikMap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Leap4EsriMap\Leap4EsriMap.csproj">
+      <Project>{29f8fa60-0838-4d6d-b59a-682232e7d2c9}</Project>
+      <Name>Leap4EsriMap</Name>
     </ProjectReference>
     <ProjectReference Include="..\Leap4Map\Leap4Map.csproj">
       <Project>{e3457d21-a977-47c5-839d-e964f06aee58}</Project>
@@ -191,6 +199,10 @@
     <ProjectReference Include="..\NUI4Map\NUI4Map.csproj">
       <Project>{cdc34235-020e-4368-962c-85c182c4d4ac}</Project>
       <Name>NUI4Map</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TelerikMapCommons\TelerikMapCommons.csproj">
+      <Project>{8c26910e-e43e-4c1c-a700-e4ec780a4170}</Project>
+      <Name>TelerikMapCommons</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

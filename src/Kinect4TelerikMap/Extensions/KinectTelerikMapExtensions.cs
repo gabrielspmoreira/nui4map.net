@@ -1,15 +1,11 @@
-using System.Windows;
-using Leap4Map.Extensions;
-using MapUtils.Converter;
-using MapUtils.Distance;
-using MapUtils.Structs;
+using Kinect4Map.Extensions;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Map;
 using NUI4Map.Structs;
 
-namespace Leap4TelerikMap.Extensions
+namespace Kinect4TelerikMap.Extensions
 {
-    public static class LeapTelerikMapExtensions
+    public static class KinectTelerikMapExtensions
     {
 
         public static Location ToTelerikMapLocation(this Vector3D handPoint, RadMap map)

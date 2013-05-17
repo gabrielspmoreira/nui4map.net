@@ -1,5 +1,4 @@
 using System;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using MapUtils.Converter;
@@ -8,8 +7,7 @@ using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Map;
 using NUI4Map.Handler;
 
-
-namespace Leap4TelerikMap.MapUtils
+namespace TelerikMapCommons.Handler
 {
 
     public class TelerikMapHandler : IMapHandler

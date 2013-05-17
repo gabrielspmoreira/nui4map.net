@@ -1,14 +1,10 @@
 using System.Windows;
-using Kinect4Map.Extensions;
 using MapUtils.Converter;
 using MapUtils.Distance;
 using MapUtils.Structs;
-using Microsoft.Kinect;
-using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Map;
-using NUI4Map.Structs;
 
-namespace Kinect4TelerikMap.Extensions
+namespace TelerikMapCommons.Extensions
 {
     public static class TelerikMapExtensions
     {
@@ -26,11 +22,7 @@ namespace Kinect4TelerikMap.Extensions
             return mapCoord;
         }
 
-        public static Location ToTelerikMapLocation(this Vector3D handPoint, RadMap map)
-        {
-            var screenPoint = handPoint.ToScreenPoint(map.ActualWidth, map.ActualHeight);
-            return Location.GetCoordinates(map, screenPoint);
-        }
+        
     } 
 
 }

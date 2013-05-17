@@ -1,14 +1,14 @@
-Ôªøusing System;
+using System;
 using ESRI.ArcGIS.Client;
 using EsriMapCommons.Extensions;
-using Kinect4EsriMap.Extensions;
-using Kinect4Map.Extensions;
-using Kinect4Map.Gestures;
+using Leap4EsriMap.Extensions;
+using Leap4Map.Extensions;
+using Leap4Map.Gestures;
 using MapUtils.Structs;
 using ESRI.ArcGIS.Client.Geometry;
 using NUI4Map.Structs;
 
-namespace Kinect4EsriMap.Gestures
+namespace Leap4EsriMap.Gestures
 {
     public class MapPanGestureHandler : MapPanGestureHandlerBase
     {
@@ -22,7 +22,7 @@ namespace Kinect4EsriMap.Gestures
 
         #endregion
 
-        #region Properties       
+        #region Properties
 
         public override object MapComponent
         {
@@ -35,7 +35,7 @@ namespace Kinect4EsriMap.Gestures
                 }
                 else
                 {
-                    throw new InvalidCastException("N√£o √© uma inst√¢ncia de Esri Map v√°lida.");
+                    throw new InvalidCastException("N„o È uma inst‚ncia de Esri Map v·lida.");
                 }
             }
         }
@@ -65,10 +65,10 @@ namespace Kinect4EsriMap.Gestures
 
         protected override void RunPanning(Vector3D handPoint)
         {
-            DoPan(handPoint);      
+            DoPan(handPoint);
         }
 
-        protected override void StopZooming()
+        protected override void StopPanning()
         {
             if (IsPanning)
             {
@@ -77,7 +77,7 @@ namespace Kinect4EsriMap.Gestures
                 if (PanStop != null)
                 {
                     PanStop();
-                }                
+                }
             }
         }
 
@@ -91,19 +91,19 @@ namespace Kinect4EsriMap.Gestures
             var deltaY = relativeDeltaDistance.Y * mapExtentDeltaY;
 
             var nextExtent = new Envelope
-                                 {
-                                     XMin = _startExtent.XMin + deltaX,
-                                     XMax = _startExtent.XMax + deltaX,
-                                     YMin = _startExtent.YMin - deltaY,
-                                     YMax = _startExtent.YMax - deltaY
-                                 };
+            {
+                XMin = _startExtent.XMin + deltaX,
+                XMax = _startExtent.XMax + deltaX,
+                YMin = _startExtent.YMin - deltaY,
+                YMax = _startExtent.YMax - deltaY
+            };
 
             _map.Extent = nextExtent;
 
             if (Panning != null)
             {
                 var handCoordinate = handPoint.ToEsriWebMercatorMapPoint(_map);
-                Panning(handCoordinate.ToMapCoord());           
+                Panning(handCoordinate.ToMapCoord());
             }
         }
 
