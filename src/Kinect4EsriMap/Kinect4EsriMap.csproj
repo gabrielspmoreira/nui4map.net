@@ -38,9 +38,9 @@
     <Reference Include="Autofac.Configuration">
       <HintPath>..\packages\Autofac.3.0.2\lib\net40\Autofac.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="ESRI.ArcGIS.Client, Version=2.2.0.629, Culture=neutral, PublicKeyToken=29c6dd6e8553d944, processorArchitecture=MSIL">
+    <Reference Include="ESRI.ArcGIS.Client, Version=3.0.0.256, Culture=neutral, PublicKeyToken=036c1c3c3d9cf2f5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>libs\ESRI.ArcGIS.Client.dll</HintPath>
+      <HintPath>..\EsriMapCommons\libs\ESRI.ArcGIS.Client.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Kinect, Version=1.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />

@@ -31,8 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ESRI.ArcGIS.Client">
-      <HintPath>..\Kinect4EsriMap\libs\ESRI.ArcGIS.Client.dll</HintPath>
+    <Reference Include="ESRI.ArcGIS.Client, Version=3.0.0.256, Culture=neutral, PublicKeyToken=036c1c3c3d9cf2f5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\ESRI.ArcGIS.Client.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />

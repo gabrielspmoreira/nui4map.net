@@ -93,7 +93,7 @@ namespace Leap4EsriMap.Gestures
             var zoomCenter = new MapPoint(handPosition.X, handPosition.Y, _map.SpatialReference);
             var scale = frame.ScaleFactor(_startFrame);
 
-            if (scale >= 1.1 || scale <= 0.95)
+            if (scale >= 1.2 || scale <= 0.90)
             {
                 var targetResolution = _startMapResolution / Math.Pow(scale, 8);
 
