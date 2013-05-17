@@ -12,10 +12,10 @@ Supported WPF map controls are:
 Sensors
 ----------
 **Kinect** - You can use a Microsoft Kinect for Windows sensor, or event your Kinect for XBox 360 sensor (with an adapter cable) for testing (MS Kinect SDK 1.5)  
-![Kinect4Map Sample App screenshot](https://raw.github.com/gabrielspmoreira/nui4map.net/master/resources/leapmotion.jpg) 
+![Kinect4Map Sample App screenshot](https://raw.github.com/gabrielspmoreira/nui4map.net/master/resources/screenshot_demoapp.png)
 
 **Leap Motion** - It is currently in pre-release phase, and according (Leap)[http://www.leapmotion.com/] will be available on June 2013.  
-![LeapMotion](https://raw.github.com/gabrielspmoreira/nui4map.net/master/resources/screenshot_demoapp.png) 
+![LeapMotion](https://raw.github.com/gabrielspmoreira/nui4map.net/master/resources/leapmotion.jpg)  
 
 Runtime
 ----------
