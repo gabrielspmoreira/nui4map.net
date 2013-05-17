@@ -11,9 +11,23 @@ Supported WPF map controls are:
 
 Sensors
 ----------
-**Leap Motion** - It is currently in pre-release phase, and according (Leap)[http://www.leapmotion.com/] will be available on June 2013. 
 **Kinect** - You can use a Microsoft Kinect for Windows sensor, or event your Kinect for XBox 360 sensor (with an adapter cable) for testing (MS Kinect SDK 1.5)
-![Kinect4Map Sample App screenshot](https://raw.github.com/gabrielspmoreira/kinect4map/master/resources/screenshot_demoapp.png) 
+![Kinect4Map Sample App screenshot](https://raw.github.com/gabrielspmoreira/nui4map/master/resources/screenshot_demoapp.png) 
+
+**Leap Motion** - It is currently in pre-release phase, and according (Leap)[http://www.leapmotion.com/] will be available on June 2013.  
+![LeapMotion](https://raw.github.com/gabrielspmoreira/nui4map/master/resources/leapmotion.jpg) 
+
+Runtime
+----------
+**Kinect**  
+- Browse - Move hands in any direction and see hands moving on screen
+- Pan - Put one hand in front of your body, with streched arms, to move (pan) tha map
+- Zoom - Put both hands in front of your body, with streched arms, and expand or contract them to zoom the map
+
+**Leap**  
+- Browse - Move on finger of one hand in any direction and see hands moving on screen
+- Pan - Move two fingers (like a "V") to move (pan) tha map
+- Zoom - Expand or contract all fingers of a hand to zoom the map
 
 Structure
 ----------
@@ -28,7 +42,6 @@ Structure
 * **SampleWPFMapApp** - Sample WPF application to demonstrate the usage of NUI4Map
 * **EsriMapCommons** - Classes relativas ao controle de mapas da ESRI
 * **TelerikMapCommons** - Classes relativas ao controle de mapas da Telerik
-
 
 Dependencies
 This .NET 4.0 project depends on some external libraries:
