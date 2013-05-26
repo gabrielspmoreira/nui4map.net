@@ -12,10 +12,10 @@ Supported WPF map controls are:
 Sensors
 ----------
 **Kinect** - You can use a Microsoft Kinect for Windows sensor, or event your Kinect for XBox 360 sensor (with an adapter cable) for testing (MS Kinect SDK 1.5)  
-![Kinect4Map Sample App screenshot](http://raw.github.com/gabrielspmoreira/nui4map.net/master/resources/screenshot_demoapp.png)
+![Kinect4Map Sample App screenshot](https://raw.github.com/gabrielspmoreira/nui4map.net/master/resources/screenshot_demoapp.png)
 
 **Leap Motion** - It is currently in pre-release phase, and according (Leap)[http://www.leapmotion.com/] will be available to consumers on June 2013.  
-![LeapMotion](http://raw.github.com/gabrielspmoreira/nui4map.net/master/resources/leapmotion.jpg)  
+![LeapMotion](https://raw.github.com/gabrielspmoreira/nui4map.net/master/resources/leapmotion.jpg)  
 
 Runtime
 ----------
@@ -68,7 +68,7 @@ public static SensorType SensorType = SensorType.Leap; //SensorType.Kinect
 
 Runtime
 ----------
-When running, you will need an internet connection for base maps retrieval (from ESRI ArcGIS Online) or Telerik (OpenStreetBase).
+When running, you will need an internet connection for base maps retrieval (from ESRI ArcGIS Online) or Telerik (OpenStreetBase).  
 You can interact with the map using the mouse, but for a NUI experience a Kinect or Leap sensor will be needed.
 
 Roadmap
