@@ -1,6 +1,6 @@
 nui4map.net
 ==========
-A tool set of .NET libraries to ease creation of WPF applications with **maps controlled by Natural User Interfaces (NUI) sensors**.   
+A toolbox of .NET libraries to ease creation of WPF applications with **maps controlled by Natural User Interfaces (NUI) sensors**.   
 Currently supported sensors are:
 * Microsoft Kinect
 * Leap Motion 
@@ -11,21 +11,21 @@ Supported WPF map controls are:
 
 Sensors
 ----------
-**Kinect** - You can use a Microsoft Kinect for Windows sensor, or event your Kinect for XBox 360 sensor (with an adapter cable) for testing (MS Kinect SDK 1.5)
-![Kinect4Map Sample App screenshot](https://raw.github.com/gabrielspmoreira/nui4map/master/resources/screenshot_demoapp.png) 
+**Kinect** - You can use a Microsoft Kinect for Windows sensor, or event your Kinect for XBox 360 sensor (with an adapter cable) for testing (MS Kinect SDK 1.5)  
+![Kinect4Map Sample App screenshot](https://raw.github.com/gabrielspmoreira/nui4map.net/master/resources/screenshot_demoapp.png)
 
-**Leap Motion** - It is currently in pre-release phase, and according (Leap)[http://www.leapmotion.com/] will be available on June 2013.  
-![LeapMotion](https://raw.github.com/gabrielspmoreira/nui4map/master/resources/leapmotion.jpg) 
+**Leap Motion** - It is currently in pre-release phase, and according (Leap)[http://www.leapmotion.com/] will be available to consumers on June 2013.  
+![LeapMotion](https://raw.github.com/gabrielspmoreira/nui4map.net/master/resources/leapmotion.jpg)  
 
 Runtime
 ----------
 **Kinect**  
 - Browse - Move hands in any direction and see hands moving on screen
-- Pan - Put one hand in front of your body, with streched arms, to move (pan) tha map
-- Zoom - Put both hands in front of your body, with streched arms, and expand or contract them to zoom the map
+- Pan - Put one hand in front of your body, with stretched arms, to move (pan) tha map
+- Zoom - Put both hands in front of your body, with stretched arms, and expand or contract the distance between them to zoom the map
 
 **Leap**  
-- Browse - Move on finger of one hand in any direction and see hands moving on screen
+- Browse - Move one finger in any direction and see hands moving on screen
 - Pan - Move two fingers (like a "V") to move (pan) tha map
 - Zoom - Expand or contract all fingers of a hand to zoom the map
 
@@ -40,22 +40,22 @@ Structure
 * **Leap4TelerikMap** - Leap4Map implementation for Telerik Map Control
 * **MapUtils** - Generic utilities for maps coordinates conversion and distance
 * **SampleWPFMapApp** - Sample WPF application to demonstrate the usage of NUI4Map
-* **EsriMapCommons** - Classes relativas ao controle de mapas da ESRI
-* **TelerikMapCommons** - Classes relativas ao controle de mapas da Telerik
+* **EsriMapCommons** - Esri ArcGISRuntime map control utility classes
+* **TelerikMapCommons** - Telerik RadMap control utility classes
 
 Dependencies
 This .NET 4.0 project depends on some external libraries:
 
-* **Microsoft Kinect SDK 1.5** or higher    
+* **Microsoft Kinect SDK 1.5** or higher - [download](http://www.microsoft.com/en-us/kinectforwindows/develop/)  
 IMPORTANT - From SDK 1.6 and beyond, MS does not allow usage of XBox Kinect sensor with SDK, only Kinect for Windows Sensor. So use MS Kinect SDK 1.5 if you need to test with your XBox Kinect (not licensed for production by MS!).
 * **KinectToolbox** - An open-source Kinect toolkit for .NET (downloadable from NuGet)
-* **Leap SDK 0.9** or higher - Leap Official SDK (https://www.leapmotion.com/)
+* **Leap SDK 0.9** or higher - [download](http://www.leapmotion.com/)
 * **Autofac** - An open-source Dependency Injection framework (downloadable from NuGet)
 
 The are also specific dependencies, depending on which map control you will use:
 * ESRI map - Depends on **ArcGIS Runtime for WPF** (tested against version 1.0)    
 For development, it requires you to be enrolled to ESRI Developer Network program and this library has a distribution-based commercial license
-* Telerik Map - Depends on **Telerik Rad Controls for WPF** (tested against Q2 2012 version)
+* Telerik Map - Depends on **Telerik Rad Controls for WPF** (tested against 2012 Q2 and 2013 Q1 releases)
 
 Setting Up
 ----------
@@ -66,9 +66,12 @@ public static MapControlType MapControlType = MapControlType.EsriArcGISRuntime; 
 public static SensorType SensorType = SensorType.Leap; //SensorType.Kinect
 ```
 
-When running, you will need an internet connection for base maps retrieval (from ESRI (ArcGIS Online) or Telerik (OpenStreetBase) and a Kinect Sensor.
+Runtime
+----------
+When running, you will need an internet connection for base maps retrieval (from ESRI ArcGIS Online) or Telerik (OpenStreetBase).  
+You can interact with the map using the mouse, but for a NUI experience a Kinect or Leap sensor will be needed.
 
 Roadmap
 ----------
-We intend to expand this project in terms of new types of integration NUI sensors \and map controls, and also in the support of other map controls.   
+We intend to expand this project in terms of new types of integration NUI sensors and map controls, and also in the support of other map controls.   
 You are welcome to contribute!
