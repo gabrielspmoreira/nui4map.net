@@ -30,6 +30,7 @@ namespace Kinect4Map.Handler
         #region Events
         public event Action<object> OnFrame;
         public event Action SensorInitialized;
+        public event Action<object> OnConnect;
         #endregion
 
         public KinectHandler()
@@ -155,6 +156,11 @@ namespace Kinect4Map.Handler
                     {
                         kinectSensor = e.Sensor;
                         InitializeSensor();
+
+                        if (OnConnect != null)
+                        {
+                            OnConnect(kinectSensor);
+                        }
                     }
                     break;
                 case KinectStatus.Disconnected:

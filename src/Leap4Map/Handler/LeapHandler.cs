@@ -18,10 +18,7 @@ namespace Leap4Map.Handler
         #endregion
 
         #region Events
-        public event Action<Controller> OnConnect;
-        public event Action<Controller> OnDisconnect;
-        public event Action<Controller> OnInitialize;
-        public event Action<Controller> OnExit;
+        public event Action<object> OnConnect;
         public event Action<object> OnFrame;
 
         #endregion
@@ -40,11 +37,16 @@ namespace Leap4Map.Handler
             // Have the sample listener receive events from the controller
             controller.AddListener(listener);
 
-            OnConnect = listener.OnConnect;
-            OnDisconnect = listener.OnDisconnect;
-            OnInitialize = listener.OnInit;
-            OnExit = listener.OnExit;
             listener.FrameEvent += listener_FrameEvent;
+            listener.ConnectEvent += listener_ConnectEvent;
+        }
+
+        void listener_ConnectEvent(Controller obj)
+        {
+            if (OnConnect != null)
+            {
+                OnConnect(obj);
+            }
         }
 
         void listener_FrameEvent(Controller obj)
@@ -57,9 +59,13 @@ namespace Leap4Map.Handler
 
         public void Stop()
         {
-            // Remove the sample listener when done
-            controller.RemoveListener(listener);
-            controller.Dispose();
+            if (controller != null)
+            {
+                // Remove the sample listener when done
+                controller.RemoveListener(listener);
+                controller.Dispose();
+                controller = null;
+            }
         }
     }
 

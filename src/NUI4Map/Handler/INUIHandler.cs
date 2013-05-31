@@ -10,6 +10,7 @@ namespace NUI4Map.Handler
     {
         SensorType SensorType { get; }
         event Action<object> OnFrame;
+        event Action<object> OnConnect;
         void Start();
         void Stop();
 
