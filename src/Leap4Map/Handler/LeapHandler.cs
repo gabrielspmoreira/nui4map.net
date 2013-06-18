@@ -43,6 +43,9 @@ namespace Leap4Map.Handler
 
         void listener_ConnectEvent(Controller obj)
         {
+            // Enabling Swipe Gesture detection for pan
+            controller.EnableGesture(Gesture.GestureType.TYPESWIPE);
+
             if (OnConnect != null)
             {
                 OnConnect(obj);
