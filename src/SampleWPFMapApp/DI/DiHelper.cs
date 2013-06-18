@@ -12,7 +12,7 @@ namespace NUI4Map.SampleWPFMapApp.DI
     static class DiHelper
     {
         #region Sample Settings
-        public static MapControlType MapControlType = MapControlType.EsriArcGISRuntime;
+        public static MapControlType MapControlType = MapControlType.TelerikRadControl;
         public static SensorType SensorType = SensorType.Leap;
         #endregion
 

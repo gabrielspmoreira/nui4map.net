@@ -16,15 +16,6 @@ namespace Leap4EsriMap.Gestures
 
         private Map _map;
 
-        private Frame _startFrame;
-
-        #endregion
-
-        #region Events
-        public override event Action ZoomStarted;
-        public override event Action ZoomStopped;
-        public override event Action Zooming;
-
         #endregion
 
         #region Properties
@@ -49,57 +40,28 @@ namespace Leap4EsriMap.Gestures
 
         #region Internal Methods
 
-        protected override void RunZooming(Leap.Frame frame)
-        {
-            DoZoomMap(frame);
-
-            if (Zooming != null)
-            {
-                Zooming();
-            }
-        }
-
         protected override void StartZoom(Leap.Frame frame)
         {
-            IsZooming = true;
-            _startFrame = frame;
             _startMapResolution = _map.Resolution;
-
-            if (ZoomStarted != null)
-            {
-                ZoomStarted();
-            }
+            base.StartZoom(frame);
         }
 
-        protected override void StopZooming()
-        {
-            if (IsZooming)
-            {
-                IsZooming = false;
-
-                if (ZoomStopped != null)
-                {
-                    ZoomStopped();
-                }
-            }
-        }
-
-
-
-
-        private void DoZoomMap(Leap.Frame frame)
+        protected override bool DoZoomMap(Leap.Frame frame)
         {
             var handPosition = frame.Hands[0].PalmPosition.ToVector3D().ToEsriWebMercatorMapPoint(_map);
             var zoomCenter = new MapPoint(handPosition.X, handPosition.Y, _map.SpatialReference);
-            var scale = frame.ScaleFactor(_startFrame);
+            var scale = frame.ScaleFactor(StartFrame);
 
-            if (scale >= 1.2 || scale <= 0.90)
+            if (scale >= 1.2 || scale <= 0.95)
             {
                 var targetResolution = _startMapResolution / Math.Pow(scale, 8);
 
                 _map.ZoomToResolution(targetResolution, zoomCenter);
-                _startFrame = frame;
+
+                return true;
             }
+
+            return false;
         }
 
 

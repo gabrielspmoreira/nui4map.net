@@ -67,6 +67,7 @@ namespace NUI4Map.SampleWPFMapApp.View
             }
             
             _nuiHandler.Start();
+            _nuiHandler.OnConnect +=_nuiHandler_OnConnect;
             
             _zoomGestureHandler = _container.Resolve<IMapZoomGestureHandler>();
             _zoomGestureHandler.MapComponent = map;
@@ -83,6 +84,12 @@ namespace NUI4Map.SampleWPFMapApp.View
             // Setting the images to be presented in the place of user's hands (Kinect) / fingers (Leap)
             ViewGrid.Children.Add(_handsDrawer.RightHandImage);
             ViewGrid.Children.Add(_handsDrawer.LeftHandImage);
+        }
+
+        void _nuiHandler_OnConnect(object obj)
+        {
+            var controller = (Controller)obj;
+            controller.EnableGesture(Gesture.GestureType.TYPESWIPE);
         }
 
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)

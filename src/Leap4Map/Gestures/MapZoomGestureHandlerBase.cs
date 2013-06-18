@@ -1,20 +1,26 @@
 using NUI4Map.Gestures;
 using System;
 using Leap;
+using System.Diagnostics;
 
 namespace Leap4Map.Gestures
 {
     public abstract class MapZoomGestureHandlerBase : IMapZoomGestureHandler
     {
-        public abstract event Action ZoomStarted;
-        public abstract event Action ZoomStopped;
-        public abstract event Action Zooming;
+        public event Action ZoomStarted;
+        public event Action ZoomStopped;
+        public event Action Zooming;
+
+        private const long MIN_TIME_BETWEEN_ZOOM_GESTURES = 1000;
+
+        protected Leap.Frame StartFrame;
+        protected DateTime LastZoomTime;
         public bool IsZooming { get; protected set; }
         public abstract object MapComponent { get; set; }
 
         protected MapZoomGestureHandlerBase()
         {
-            
+            LastZoomTime = DateTime.Now;
         }
 
         public bool Detect(object frame)
@@ -27,9 +33,10 @@ namespace Leap4Map.Gestures
 
                 // Check if the hand has any fingers
                 var fingers = hand.Fingers;
-                if (!fingers.Empty && fingers.Count >= 3 && hand.SphereRadius >= 60)
-                {
 
+                Debug.WriteLine(hand.PalmVelocity.Magnitude);
+                if (!fingers.Empty && fingers.Count >= 3 && hand.PalmVelocity.Magnitude < 500)
+                {
                     if (!IsZooming)
                     {
                         StartZoom(leapFrame);
@@ -49,8 +56,51 @@ namespace Leap4Map.Gestures
             return IsZooming;
         }
 
-        protected abstract void StartZoom(Frame frame);
-        protected abstract void RunZooming(Frame frame);
-        protected abstract void StopZooming();
+        protected virtual void StartZoom(Leap.Frame frame)
+        {
+            IsZooming = true;
+            StartFrame = frame;
+
+            if (ZoomStarted != null)
+            {
+                ZoomStarted();
+            }
+        }
+
+        protected virtual void StopZooming()
+        {
+            if (IsZooming)
+            {
+                IsZooming = false;
+
+                if (ZoomStopped != null)
+                {
+                    ZoomStopped();
+                }
+            }
+        }
+
+        protected virtual void RunZooming(Leap.Frame frame)
+        {
+            // To avoid the effect of return to previous zoom when returning fingers to previous position
+            if ((DateTime.Now - LastZoomTime).TotalMilliseconds <= MIN_TIME_BETWEEN_ZOOM_GESTURES)
+               return;
+
+            /*if (frame.ScaleProbability(StartFrame) < 0.8)
+                return;
+            */
+            if (DoZoomMap(frame))
+            {
+                StartFrame = frame;
+                LastZoomTime = DateTime.Now;
+            }
+           
+            if (Zooming != null)
+            {
+                Zooming();
+            }
+        }
+
+        protected abstract bool DoZoomMap(Leap.Frame frame);
     }
 }

@@ -16,10 +16,6 @@ namespace Leap4EsriMap.Gestures
 
         private Map _map;
 
-        private Envelope _startExtent;
-        private MapPoint _startHandCoordinate;
-        private Vector3D _startHandPoint;
-
         #endregion
 
         #region Properties
@@ -42,69 +38,23 @@ namespace Leap4EsriMap.Gestures
 
         #endregion
 
-        #region Events
-        public override event Action<MapCoord> PanStart;
-        public override event Action PanStop;
-        public override event Action<MapCoord> Panning;
-        #endregion
+        #region Private Methods      
 
-        #region Private Methods
-
-        protected override void StartPan(Vector3D handPoint)
+        protected override void DoPan(Vector3D movementVector)
         {
-            IsPanning = true;
-            _startHandPoint = handPoint;
-            _startHandCoordinate = handPoint.ToEsriWebMercatorMapPoint(_map);
-            _startExtent = new Envelope(_map.Extent.XMin, _map.Extent.YMin, _map.Extent.XMax, _map.Extent.YMax);
-
-            if (PanStart != null)
-            {
-                PanStart(_startHandCoordinate.ToMapCoord());
-            }
-        }
-
-        protected override void RunPanning(Vector3D handPoint)
-        {
-            DoPan(handPoint);
-        }
-
-        protected override void StopPanning()
-        {
-            if (IsPanning)
-            {
-                IsPanning = false;
-
-                if (PanStop != null)
-                {
-                    PanStop();
-                }
-            }
-        }
-
-        protected void DoPan(Vector3D handPoint)
-        {
-            var mapExtentDeltaX = (_startExtent.XMax - _startExtent.XMin);
-            var mapExtentDeltaY = (_startExtent.YMax - _startExtent.YMin);
-
-            var relativeDeltaDistance = _startHandPoint.DistanceVectorFrom(handPoint, _map.ActualWidth, _map.ActualHeight);
-            var deltaX = relativeDeltaDistance.X * mapExtentDeltaX;
-            var deltaY = relativeDeltaDistance.Y * mapExtentDeltaY;
-
+            var deltaX = _map.Extent.Width / 4;
+            var deltaY = _map.Extent.Height / 4;
+            
+            var currentCenter = _map.Extent.GetCenter();
             var nextExtent = new Envelope
             {
-                XMin = _startExtent.XMin + deltaX,
-                XMax = _startExtent.XMax + deltaX,
-                YMin = _startExtent.YMin - deltaY,
-                YMax = _startExtent.YMax - deltaY
+                XMin = _map.Extent.XMin - (movementVector.X * deltaX),
+                XMax = _map.Extent.XMax - (movementVector.X * deltaX),
+                YMin = _map.Extent.YMin - (movementVector.Y * deltaY),
+                YMax = _map.Extent.YMax - (movementVector.Y * deltaY)
             };
 
-            _map.Extent = nextExtent;
-
-            if (Panning != null)
-            {
-                var handCoordinate = handPoint.ToEsriWebMercatorMapPoint(_map);
-                Panning(handCoordinate.ToMapCoord());
-            }
+            _map.PanTo(nextExtent.GetCenter());
         }
 
         #endregion

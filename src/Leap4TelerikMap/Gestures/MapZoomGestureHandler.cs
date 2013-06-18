@@ -5,19 +5,14 @@ using MapUtils.Distance;
 using Telerik.Windows.Controls;
 using Leap4Map.Gestures;
 using Leap4Map.Extensions;
+using System.Collections;
 
 namespace Leap4TelerikMap.Gestures
 {
 
     public class MapZoomGestureHandler : MapZoomGestureHandlerBase
     {
-
         private RadMap _map;
-        private Frame _startFrame;
-
-        public override event Action Zooming;
-        public override event Action ZoomStarted;
-        public override event Action ZoomStopped;
 
         public override object MapComponent
         {
@@ -39,55 +34,25 @@ namespace Leap4TelerikMap.Gestures
         }
 
 
-        private void DoZoomMap(Leap.Frame frame)
+        protected override bool DoZoomMap(Leap.Frame frame)
         {
-            var scale = frame.Hands[0].ScaleFactor(_startFrame);
+            var scale = frame.Hands[0].ScaleFactor(StartFrame);
 
-            if (scale >= 1.1)
+            if (scale >= 1.2)
             {
                 _map.ZoomLevel += 1;
-                _startFrame = frame;
+                return true;
             }
             else if (scale <= 0.95)
             {
                 _map.ZoomLevel -= 1;
-                _startFrame = frame;
+                return true;
             }
+
+            return false;
         }
 
-        protected override void RunZooming(Leap.Frame frame)
-        {
-            DoZoomMap(frame);
-            
-            if (Zooming != null)
-            {
-                Zooming();
-            }
-        }
-
-        protected override void StartZoom(Leap.Frame frame)
-        {
-            IsZooming = true;
-            _startFrame = frame;
-           
-            if (ZoomStarted != null)
-            {
-                ZoomStarted();
-            }
-        }
-
-        protected override void StopZooming()
-        {
-            if (IsZooming)
-            {
-                IsZooming = false;
-                
-                if (ZoomStopped != null)
-                {
-                    ZoomStopped();
-                }
-            }
-        }
+        
 
     }
 
